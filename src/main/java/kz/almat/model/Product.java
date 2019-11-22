@@ -32,9 +32,9 @@ public class Product {
     @NotNull
     private Integer quantity;
 
-    @Column(name = "CATEGORY_ID")
-    @NotNull
-    private Long categoryId;
+    @JoinColumn(name = "CATEGORY_ID", foreignKey = @ForeignKey(name = "PRODUCT_CATEGORY_FK"))
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
 
 }
 

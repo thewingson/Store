@@ -23,7 +23,16 @@
     <br/>
     Quantity: <input type="number" name="quantity"/>
     <br/>
-    Category ID: <input type="number" name="categoryId"/>
+    <%--Category ID: <input type="number" name="categoryId"/>--%>
+    Category:
+    <select name="categoryId">
+        <c:if test="${not empty categories}">
+            <c:forEach var="category" items="${categories}">
+                <option value="${category.id}">${category.name}</option>
+            </c:forEach>
+        </c:if>
+    </select>
+
     <input type="submit" value="Submit"/>
 </form>
 

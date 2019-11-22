@@ -30,10 +30,13 @@ public class ProductServiceImpl implements ProductService {
 
     public void delete(Product product) {
         productRepo.delete(product);
-
     }
 
     public void edit(Product product) {
         productRepo.edit(product);
+    }
+
+    public List<Product> getByCategoryId(Long id) {
+        return productRepo.getByCategoryId(id);
     }
 }

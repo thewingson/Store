@@ -24,7 +24,15 @@
         <br/>
         Quantity: <input type="number" name="quantity" placeholder="${product.quantity}"/>
         <br/>
-        Category ID: <input type="number" name="categoryId" placeholder="${product.categoryId}"/>
+        Category :
+        <select name="categoryId">
+            <c:if test="${not empty categories}">
+                <option selected="selected" value="${product.category.id}">${product.category.name}</option>
+                <c:forEach var="category" items="${categories}">
+                    <option value="${category.id}">${category.name}</option>
+                </c:forEach>
+            </c:if>
+        </select>
         <input type="submit" value="Submit"/>
     </form>
 </c:if>

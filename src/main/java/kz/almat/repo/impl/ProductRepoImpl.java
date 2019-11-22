@@ -43,4 +43,10 @@ public class ProductRepoImpl implements ProductRepo {
         Session session = sessionFactory.getCurrentSession();
         session.update(product);
     }
+
+    @SuppressWarnings("unchecked")
+    public List<Product> getByCategoryId(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return (List<Product>) session.createQuery(" from Product where category.id=:categoryId").setParameter("categoryId", id).list();
+    }
 }

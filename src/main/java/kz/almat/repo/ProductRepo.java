@@ -11,5 +11,6 @@ public interface ProductRepo {
     void add(Product product);
     void delete(Product product);
     void edit(Product product);
+    List<Product> getByCategoryId(Long id);
 
 }

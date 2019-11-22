@@ -22,12 +22,12 @@ public class Category {
     @SequenceGenerator(sequenceName = "CATEGORY_SEQ_ID", name = "CATEGORY_SEQ", allocationSize = 1)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     @NotNull
     private String name;
 
-    @Column(name = "products")
-    @OneToMany(mappedBy = "CATEGORY")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID", updatable = false, insertable = false)
     private List<Product> products = new ArrayList<Product>();
 
 }
