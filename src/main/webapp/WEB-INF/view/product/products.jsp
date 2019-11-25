@@ -53,6 +53,7 @@
                 <td>
                     <a href="/products/update/${product.id}">Edit</a>
                     <a href="/products/delete/${product.id}">Delete</a>
+                    <a href="/orders/delete/${product.id}">Add to cart</a>
                 </td>
             </tr>
         </c:forEach>

@@ -1,22 +1,18 @@
 package kz.almat.model;
 
 
-import kz.almat.model.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDR")
 public class Order {
 
     @Id
@@ -25,22 +21,11 @@ public class Order {
     @SequenceGenerator(sequenceName = "ORDER_SEQ_ID", name = "ORDER_SEQ", allocationSize = 1)
     private Long id;
 
-    @Column(name = "SHIP_DATE")
-    private Timestamp shipDate;
+    @Column(name = "NAME")
+    private String name;
 
-    @Column(name = "CREATED_AT")
-    private Timestamp createdAt;
-
-    @Column(name = "ORDER_STATUS")
-    @NotNull
-    private OrderStatus orderStatus;
-
-    @Column(name = "COMPLETE")
-    @NotNull
-    private Boolean complete = false;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "ORDER_ID", updatable = false)
-    private List<Product> products = new ArrayList<Product>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ORDER_ID")
+    private Set<OrderProduct> items;
 
 }
