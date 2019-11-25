@@ -13,6 +13,15 @@
 </head>
 <body>
 
+
+<ul>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/categories">Categories</a></li>
+    <li><a href="/orders">Orders</a></li>
+    <li><a href="/vendors">Vendors</a></li>
+    <li><a href="/users">Users</a></li>
+</ul>
+
 <h2>Categories</h2>
 
 <a href="/categories/create">Add</a>

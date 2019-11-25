@@ -26,8 +26,8 @@ public class Category {
     @NotNull
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID", updatable = false, insertable = false)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "CATEGORY_ID", updatable = false)
     private List<Product> products = new ArrayList<Product>();
 
 }

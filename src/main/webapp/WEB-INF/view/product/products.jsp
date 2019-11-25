@@ -15,6 +15,14 @@
 <body>
 
 <ul>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/categories">Categories</a></li>
+    <li><a href="/orders">Orders</a></li>
+    <li><a href="/vendors">Vendors</a></li>
+    <li><a href="/users">Users</a></li>
+</ul>
+
+<ul>
     <c:if test="${not empty categories}">
         <c:forEach var="category" items="${categories}">
             <li><a href="/categories/${category.id}/products">${category.name}</a></li>
