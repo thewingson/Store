@@ -8,7 +8,7 @@ public interface OrderRepo {
 
     List<Order> getAll();
     Order getById(Long id);
-    void add(Order order);
+    Long add();
     void delete(Order order);
     void edit(Order order);
 

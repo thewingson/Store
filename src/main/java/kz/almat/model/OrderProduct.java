@@ -28,7 +28,6 @@ public class OrderProduct {
     @JoinColumn(name = "ORDR_ID", foreignKey = @ForeignKey(name = "OP_ORDR_FK"))
     private Order order;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "OP_PRODUCT_FK"))
     private Product product;
