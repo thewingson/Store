@@ -26,7 +26,7 @@
 
     <c:if test="${not empty orders}">
         <c:forEach var="order" items="${orders}">
-            <mark>${order.id}</mark>
+            <mark>${order.id} / ${order.status} / ${order.complete} / ${order.createdAt} / ${order.shipDate}</mark>
             <c:forEach var="item" items="${order.items}">
                 <i>${item.product.name}</i> / <i>${item.quantity}</i>
             </c:forEach>

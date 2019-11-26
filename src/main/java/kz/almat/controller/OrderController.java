@@ -1,11 +1,9 @@
 package kz.almat.controller;
 
 import kz.almat.model.Order;
-import kz.almat.model.OrderProduct;
 import kz.almat.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,10 +28,10 @@ public class OrderController {
         return map;
     }
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ModelAndView getAll(){
-//        return getList();
-//    }
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView getAll(){
+        return getList();
+    }
 //
 //    @RequestMapping(method = RequestMethod.GET, value = "/create")
 //    public ModelAndView create(){
