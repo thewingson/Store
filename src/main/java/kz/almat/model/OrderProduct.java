@@ -11,24 +11,25 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ORDER_PRODUCT")
+@Table(name = "ORDR_PRODUCT")
 public class OrderProduct {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(generator = "ORDER_PRODUCT_SEQ", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(sequenceName = "ORDER_PRODUCT_SEQ_ID", name = "ORDER_PRODUCT_SEQ", allocationSize = 1)
+    @GeneratedValue(generator = "ORDR_PRODUCT_SEQ", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(sequenceName = "ORDR_PRODUCT_SEQ_ID", name = "ORDR_PRODUCT_SEQ", allocationSize = 1)
     private Long id;
 
     @Column(name = "QUANTITY")
     @NotNull
     private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "ORDER_ID", foreignKey = @ForeignKey(name = "OP_ORDER_FK"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ORDR_ID", foreignKey = @ForeignKey(name = "OP_ORDR_FK"))
     private Order order;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "OP_PRODUCT_FK"))
     private Product product;
 

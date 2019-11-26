@@ -35,12 +35,22 @@
         <c:forEach var="category" items="${categories}">
             <tr>
                 <td>${category.id}</td>
-                <td><a href="/categories/${category.id}">${category.name}</a> | <a href="/categories/${category.id}/products"> See Products </a></td>
+                <td><a href="/categories/${category.id}">${category.name}</a> | <a
+                        href="/categories/${category.id}/products"> See Products </a></td>
                 <td>
                     <a href="/categories/update/${category.id}">Edit</a>
                     <a href="/categories/delete/${category.id}">Delete</a>
                 </td>
             </tr>
+            <c:if test="${not empty category.products}">
+                <c:forEach var="product" items="${category.products}">
+                    <tr>
+                        <td>
+                            <bold>${product.name}</bold>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:if>
         </c:forEach>
     </c:if>
 </table>

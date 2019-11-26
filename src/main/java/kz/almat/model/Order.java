@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,15 +18,15 @@ public class Order {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(generator = "ORDER_SEQ", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(sequenceName = "ORDER_SEQ_ID", name = "ORDER_SEQ", allocationSize = 1)
+    @GeneratedValue(generator = "ORDR_SEQ", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(sequenceName = "ORDR_SEQ_ID", name = "ORDR_SEQ", allocationSize = 1)
     private Long id;
 
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ORDER_ID")
-    private Set<OrderProduct> items;
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ORDR_ID", updatable = false)
+    private List<OrderProduct> items = new ArrayList<OrderProduct>();
 
 }

@@ -28,8 +28,9 @@
         <c:forEach var="order" items="${orders}">
             <mark>${order.id}</mark>
             <c:forEach var="item" items="${order.items}">
-                <i>${item.id}</i>
+                <i>${item.product.name}</i> / <i>${item.quantity}</i>
             </c:forEach>
+            <br>
         </c:forEach>
     </c:if>
 

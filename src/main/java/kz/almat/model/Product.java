@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -36,9 +35,6 @@ public class Product {
     @JoinColumn(name = "CATEGORY_ID", foreignKey = @ForeignKey(name = "PRODUCT_CATEGORY_FK"))
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private Set<OrderProduct> items;
 
 }
 
