@@ -20,6 +20,7 @@
     <li><a href="/orders">Orders</a></li>
     <li><a href="/vendors">Vendors</a></li>
     <li><a href="/users">Users</a></li>
+    <li><a href="/orders/cart">Cart</a></li>
 </ul>
 
 <ul>
@@ -53,7 +54,7 @@
                 <td>
                     <a href="/products/update/${product.id}">Edit</a>
                     <a href="/products/delete/${product.id}">Delete</a>
-                    <a href="/orders/delete/${product.id}">Add to cart</a>
+                    <a href="/orders/addToCart/${product.id}">Add to cart</a>
                 </td>
             </tr>
         </c:forEach>

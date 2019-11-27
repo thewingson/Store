@@ -20,19 +20,28 @@
     <li><a href="/orders">Orders</a></li>
     <li><a href="/vendors">Vendors</a></li>
     <li><a href="/users">Users</a></li>
+    <li><a href="/orders/cart">Cart</a></li>
 </ul>
 
 <h2>Orders</h2>
 
-    <c:if test="${not empty orders}">
-        <c:forEach var="order" items="${orders}">
-            <mark>${order.id} / ${order.status} / ${order.complete} / ${order.createdAt} / ${order.shipDate}</mark>
-            <c:forEach var="item" items="${order.items}">
-                <i>${item.product.name}</i> / <i>${item.quantity}</i>
-            </c:forEach>
-            <br>
+<c:if test="${not empty orders}">
+    <c:forEach var="order" items="${orders}">
+        <mark>${order.id} / ${order.status} / ${order.complete} / ${order.createdAt} / ${order.shipDate}</mark>
+        <c:forEach var="item" items="${order.items}">
+            <i>${item.product.name}</i> / <i>${item.quantity}</i>
         </c:forEach>
-    </c:if>
+        <br>
+    </c:forEach>
+</c:if>
+
+<%--<c:if test="${not empty sessionScope.productList}">--%>
+    <%--<c:forEach var="item" items="${sessionScope.productList}">--%>
+        <%--<h4>${item.productId}</h4>--%>
+        <%--<h4>${item.quantity}</h4>--%>
+        <%--<br>--%>
+    <%--</c:forEach>--%>
+<%--</c:if>--%>
 
 </body>
 </html>

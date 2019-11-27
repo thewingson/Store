@@ -2,6 +2,7 @@ package kz.almat.controller;
 
 import kz.almat.model.Category;
 import kz.almat.model.Product;
+import kz.almat.model.dto.ProductDTO;
 import kz.almat.service.CategoryService;
 import kz.almat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = {"/products", "", "/"})
@@ -34,7 +36,13 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView getAll(){
+    public ModelAndView getAll(HttpSession session){
+
+        if(session.getAttribute("cart") == null){
+            Map<Long, Integer> cart = new HashMap<Long, Integer>();
+            session.setAttribute("cart", cart);
+        }
+
         return getList();
     }
 

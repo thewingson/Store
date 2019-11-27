@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -35,29 +36,29 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.getById(id);
     }
 
-    public void add(List<ProductDTO> products) {
+    public void add(Map<Long, Integer> cart) {
         //creation of order
         Long orderId = orderRepo.add();
         Order order = new Order();
         order.setId(orderId);
 
-        for(ProductDTO p : products){
+        for(Map.Entry<Long, Integer> c : cart.entrySet()){
             // decrement of product quantity
-            Product productToBuy = productRepo.getById(p.getProductId());
-            productToBuy.setQuantity(productToBuy.getQuantity() - p.getQuantity());
+            Product productToBuy = productRepo.getById(c.getKey());
+            productToBuy.setQuantity(productToBuy.getQuantity() - c.getValue());
             productRepo.edit(productToBuy);
 
             // new OrderProduct
             OrderProduct orderProduct = new OrderProduct();
             orderProduct.setOrder(order);
             orderProduct.setProduct(productToBuy);
-            orderProduct.setQuantity(p.getQuantity());
+            orderProduct.setQuantity(c.getValue());
             orderProductRepo.add(orderProduct);
         }
 
     }
 
-    public void addOne(Product products) {
+    public void addOne(Long productId) {
 
     }
 
