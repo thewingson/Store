@@ -47,4 +47,9 @@ public class Order {
     @JoinColumn(name = "ORDR_ID", updatable = false)
     private List<OrderProduct> items = new ArrayList<OrderProduct>();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USR_ID", foreignKey = @ForeignKey(name = "PRODUCT_CATEGORY_FK"))
+//    @NotNull
+    private User user;
+
 }

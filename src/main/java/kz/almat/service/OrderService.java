@@ -10,7 +10,6 @@ public interface OrderService {
     List<Order> getAll();
     Order getById(Long id);
     void add(Map<Long, Integer> cart);
-    void addOne(Long productId);
     void delete(Order order);
     void edit(Order order);
 

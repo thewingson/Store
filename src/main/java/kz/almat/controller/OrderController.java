@@ -1,9 +1,7 @@
 package kz.almat.controller;
 
 import kz.almat.model.Order;
-import kz.almat.model.dto.ProductDTO;
 import kz.almat.service.OrderService;
-import kz.almat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -21,9 +21,6 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private ProductService productService;
 
     private ModelAndView getList(){
 
