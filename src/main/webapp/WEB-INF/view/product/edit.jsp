@@ -7,10 +7,9 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <html>
 <head>
-    <title>Products</title>
+    <title>Edit Product</title>
 </head>
 <body>
 
@@ -18,12 +17,9 @@
 <c:if test="${not empty product}">
     <form action="/products/update" method="POST">
         <input type="hidden" name="id" value="${product.id}"/>
-        Name: <input type="text" name="name" placeholder="${product.name}">
-        <br/>
-        Price: <input type="number" name="price" placeholder="${product.price}"/>
-        <br/>
-        Quantity: <input type="number" name="quantity" placeholder="${product.quantity}"/>
-        <br/>
+        Name: <input type="text" name="name" placeholder="${product.name}"><br/>
+        Price: <input type="number" name="price" placeholder="${product.price}"/><br/>
+        Quantity: <input type="number" name="quantity" placeholder="${product.quantity}"/><br/>
         Category :
         <select name="categoryId">
             <c:if test="${not empty categories}">
@@ -32,7 +28,7 @@
                     <option value="${category.id}">${category.name}</option>
                 </c:forEach>
             </c:if>
-        </select>
+        </select><br>
         <input type="submit" value="Submit"/>
     </form>
 </c:if>

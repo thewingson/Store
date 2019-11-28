@@ -10,7 +10,7 @@
 
 <html>
 <head>
-    <title>Categories</title>
+    <title>Edit Category</title>
 </head>
 <body>
 

@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Almat_Rakhmetolla
-  Date: 11/21/2019
-  Time: 3:46 PM
+  Date: 11/28/2019
+  Time: 12:20 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
-    <title>Categories</title>
+    <title>Vendors</title>
 </head>
 <body>
 
@@ -23,9 +23,9 @@
     <li><a href="/orders/cart">Cart</a></li>
 </ul>
 
-<h2>Categories</h2>
+<h2>Vendors</h2>
 
-<a href="/categories/create">Add</a>
+<a href="/vendors/create">Add</a>
 
 <table>
     <tr>
@@ -33,15 +33,15 @@
         <th>Name</th>
         <th>Action</th>
     </tr>
-    <c:if test="${not empty categories}">
-        <c:forEach var="category" items="${categories}">
+    <c:if test="${not empty vendors}">
+        <c:forEach var="vendor" items="${vendors}">
             <tr>
-                <td>${category.id}</td>
+                <td>${vendor.id}</td>
                 <td>
-                    <a href="/categories/${category.id}">${category.name}</a> | <a href="/categories/${category.id}/products"> See Products </a>
+                    <a href="/vendors/${vendor.id}">${vendor.name}</a> | <a href="/vendors/${vendor.id}/products"> See Products </a>
                 </td>
                 <td>
-                    <a href="/categories/update/${category.id}">Edit</a> | <a href="/categories/delete/${category.id}">Delete</a>
+                    <a href="/vendors/update/${vendor.id}">Edit</a> | <a href="/vendors/delete/${vendor.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -50,4 +50,5 @@
 
 </body>
 </html>
+
 

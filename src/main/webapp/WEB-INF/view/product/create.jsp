@@ -10,20 +10,16 @@
 
 <html>
 <head>
-    <title>Products</title>
+    <title>Create Product</title>
 </head>
 <body>
 
 <h2>Create Product</h2>
 
 <form action="/products" method="POST">
-    Name: <input type="text" name="name">
-    <br/>
-    Price: <input type="number" name="price"/>
-    <br/>
-    Quantity: <input type="number" name="quantity"/>
-    <br/>
-    <%--Category ID: <input type="number" name="categoryId"/>--%>
+    Name: <input type="text" name="name" /><br/>
+    Price: <input type="number" name="price"/><br/>
+    Quantity: <input type="number" name="quantity"/><br/>
     Category:
     <select name="categoryId">
         <c:if test="${not empty categories}">
@@ -31,8 +27,7 @@
                 <option value="${category.id}">${category.name}</option>
             </c:forEach>
         </c:if>
-    </select>
-
+    </select><br/>
     <input type="submit" value="Submit"/>
 </form>
 

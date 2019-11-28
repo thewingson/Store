@@ -1,21 +1,22 @@
 <%--
   Created by IntelliJ IDEA.
   User: Almat_Rakhmetolla
-  Date: 11/21/2019
-  Time: 11:29 AM
+  Date: 11/28/2019
+  Time: 12:20 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <html>
 <head>
-    <title>Category</title>
+    <title>Vendor</title>
 </head>
 <body>
 
-<h2>${category.name}</h2>
+<h2>${vendor.name}</h2>
 
-<h3><a href="/categories/update/${category.id}">Edit</a> | <a href="/categories/delete/${category.id}">Delete</a></h3>
+<h3><a href="/vendors/update/${vendor.id}">Edit</a> | <a href="/vendors/delete/${vendor.id}">Delete</a></h3>
 
 <table>
     <tr>

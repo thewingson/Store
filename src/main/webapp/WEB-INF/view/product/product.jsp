@@ -7,7 +7,6 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <html>
 <head>
     <title>Product</title>
@@ -32,8 +31,7 @@
                 <td>${product.quantity}</td>
                 <td>${product.categoryId}</td>
                 <td>
-                    <a href="/products/update/${product.id}">Edit</a>
-                    <a href="/products/delete/${product.id}">Delete</a>
+                    <a href="/products/update/${product.id}">Edit</a> | <a href="/products/delete/${product.id}">Delete</a>
                 </td>
             </tr>
     </c:if>

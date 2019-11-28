@@ -36,6 +36,10 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
+    @JoinColumn(name = "VENDOR_ID", foreignKey = @ForeignKey(name = "PRODUCT_VENDOR_FK"))
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Vendor vendor;
+
 }
 
 
