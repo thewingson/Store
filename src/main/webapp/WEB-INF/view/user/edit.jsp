@@ -17,7 +17,7 @@
 <c:if test="${not empty user}">
     <form action="/users/update" method="POST">
         <input type="hidden" name="id" value="${user.id}"/>
-        Name: <input type="text" name="name" placeholder="${user.name}">
+        Name: <input type="text" name="name" placeholder="${user.username}">
         Firstname: <input type="text" name="firstname" placeholder="${user.firstName}"/><br>
         Lastname: <input type="text" name="lastname" placeholder="${user.lastName}"/><br>
         Email: <input type="text" name="email" placeholder="${user.email}"/><br>

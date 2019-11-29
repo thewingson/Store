@@ -5,6 +5,7 @@ import kz.almat.model.enums.OrderStatus;
 import kz.almat.repo.OrderRepo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,5 +55,21 @@ public class OrderRepoImpl implements OrderRepo {
     public void edit(Order order) {
         Session session = sessionFactory.getCurrentSession();
         session.update(order);
+    }
+
+    public void approve(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("Update Order set status =: status where id =: id");
+        query.setParameter("status", OrderStatus.APPROVED);
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    public void delivered(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("Update Order set status =: status where id =: id");
+        query.setParameter("status", OrderStatus.DELIVERED);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }

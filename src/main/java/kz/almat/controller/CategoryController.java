@@ -53,7 +53,7 @@ public class CategoryController {
     public ModelAndView getProducts(@PathVariable("id") Long id){
 
         Category category = categoryService.getById(id);
-        List<Product> products = productService.getByCategoryId(id);
+        List<Product> products = category.getProducts();
 
         ModelAndView map = new ModelAndView("category/category");
         map.addObject("category", category);

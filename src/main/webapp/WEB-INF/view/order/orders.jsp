@@ -7,7 +7,6 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <html>
 <head>
     <title>Orders</title>
@@ -25,23 +24,37 @@
 
 <h2>Orders</h2>
 
-<c:if test="${not empty orders}">
-    <c:forEach var="order" items="${orders}">
-        <mark>${order.id} / ${order.status} / ${order.complete} / ${order.createdAt} / ${order.shipDate}</mark>
-        <c:forEach var="item" items="${order.items}">
-            <i>${item.product.name}</i> / <i>${item.quantity}</i>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Created At</th>
+        <th>Ship Date</th>
+        <th>Status</th>
+        <th>Complete</th>
+        <th>Username</th>
+        <th>Action</th>
+    </tr>
+    <c:if test="${not empty orders}">
+        <c:forEach var="order" items="${orders}">
+            <tr>
+                <td>${order.id}</td>
+                <td>${order.createdAt}</td>
+                <td>${order.shipDate}</td>
+                <td>${order.status}</td>
+                <td>${order.complete}</td>
+                <td>${order.user.username}</td>
+                <td>
+                    <a href="/orders/${order.id}">See Items</a> |
+                    <a href="/orders/update/${order.id}">Edit</a> |
+                    <a href="/orders/delete/${order.id}">Delete</a> |
+                    <a href="/orders/approve/${order.id}">Approve</a> |
+                    <a href="/orders/delivered/${order.id}">Delivered</a> |
+                    <a href="/orders/delete/${order.id}">Cancel</a>
+                </td>
+            </tr>
         </c:forEach>
-        <br>
-    </c:forEach>
-</c:if>
-
-<%--<c:if test="${not empty sessionScope.productList}">--%>
-    <%--<c:forEach var="item" items="${sessionScope.productList}">--%>
-        <%--<h4>${item.productId}</h4>--%>
-        <%--<h4>${item.quantity}</h4>--%>
-        <%--<br>--%>
-    <%--</c:forEach>--%>
-<%--</c:if>--%>
+    </c:if>
+</table>
 
 </body>
 </html>

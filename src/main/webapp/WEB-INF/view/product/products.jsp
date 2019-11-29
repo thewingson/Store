@@ -33,6 +33,7 @@
         <th>Price</th>
         <th>Quantity</th>
         <th>Category</th>
+        <th>Vendor</th>
     </tr>
     <c:if test="${not empty products}">
         <c:forEach var="product" items="${products}">
@@ -42,6 +43,7 @@
                 <td>${product.price}</td>
                 <td>${product.quantity}</td>
                 <td>${product.category.name}</td>
+                <td>${product.vendor.name}</td>
                 <td><a href="/products/update/${product.id}">Edit</a> | <a href="/products/delete/${product.id}">Delete</a> | <a href="/orders/addToCart/${product.id}">Add to cart</a>
                 </td>
             </tr>

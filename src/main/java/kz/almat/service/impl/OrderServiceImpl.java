@@ -23,10 +23,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepo orderRepo;
 
     @Autowired
-    private ProductRepo productRepo;
+    private OrderProductRepo orderProductRepo;
 
     @Autowired
-    private OrderProductRepo orderProductRepo;
+    private ProductRepo productRepo;
 
     public List<Order> getAll() {
         return orderRepo.getAll();
@@ -63,10 +63,47 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void delete(Order order) {
+
+        List<OrderProduct> orderProducts = order.getItems();
+
+        for (OrderProduct op : orderProducts){
+            Product product = op.getProduct();
+            product.setQuantity(product.getQuantity() + op.getQuantity());
+            productRepo.edit(product);
+        }
+
         orderRepo.delete(order);
     }
 
     public void edit(Order order) {
         orderRepo.edit(order);
+    }
+
+    public void approve(Long id) {
+        orderRepo.approve(id);
+    }
+
+    public void delivered(Long id) {
+        orderRepo.delivered(id);
+    }
+
+    public void removeItem(Long orderId, Long itemId) {
+        orderProductRepo.removeItem(orderId, itemId);
+    }
+
+    public void increase(Long itemId) {
+        OrderProduct orderProduct = orderProductRepo.getById(itemId);
+        Product product = productRepo.getById(orderProduct.getProduct().getId());
+        product.setQuantity(product.getQuantity() - 1);
+        productRepo.edit(product);
+        orderProductRepo.increase(itemId);
+    }
+
+    public void decrease(Long itemId) {
+        OrderProduct orderProduct = orderProductRepo.getById(itemId);
+        Product product = productRepo.getById(orderProduct.getProduct().getId());
+        product.setQuantity(product.getQuantity() + 1);
+        productRepo.edit(product);
+        orderProductRepo.decrease(itemId);
     }
 }

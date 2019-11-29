@@ -12,5 +12,10 @@ public interface OrderService {
     void add(Map<Long, Integer> cart);
     void delete(Order order);
     void edit(Order order);
+    void approve(Long id);
+    void delivered(Long id);
+    void removeItem(Long orderId, Long itemId);
+    void increase(Long itemId);
+    void decrease(Long itemId);
 
 }

@@ -28,6 +28,14 @@
             </c:forEach>
         </c:if>
     </select><br/>
+    Vendor:
+    <select name="vendorId">
+        <c:if test="${not empty vendors}">
+            <c:forEach var="vendor" items="${vendors}">
+                <option value="${vendor.id}">${vendor.name}</option>
+            </c:forEach>
+        </c:if>
+    </select><br/>
     <input type="submit" value="Submit"/>
 </form>
 

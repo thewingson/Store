@@ -11,5 +11,7 @@ public interface OrderRepo {
     Long add();
     void delete(Order order);
     void edit(Order order);
+    void approve(Long id);
+    void delivered(Long id);
 
 }

@@ -21,7 +21,8 @@
         <th>Name</th>
         <th>Price</th>
         <th>Quantity</th>
-        <th>Category ID</th>
+        <th>Category</th>
+        <th>Vendor</th>
     </tr>
     <c:if test="${not empty product}">
             <tr>
@@ -29,7 +30,8 @@
                 <td>${product.name}</td>
                 <td>${product.price}</td>
                 <td>${product.quantity}</td>
-                <td>${product.categoryId}</td>
+                <td>${product.category.name}</td>
+                <td>${product.vendor.name}</td>
                 <td>
                     <a href="/products/update/${product.id}">Edit</a> | <a href="/products/delete/${product.id}">Delete</a>
                 </td>

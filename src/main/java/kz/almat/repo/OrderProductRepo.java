@@ -16,4 +16,9 @@ public interface OrderProductRepo {
 
     void edit(OrderProduct orderProduct);
 
+    void removeItem(Long orderId, Long itemId);
+
+    void increase(Long itemId);
+
+    void decrease(Long itemId);
 }

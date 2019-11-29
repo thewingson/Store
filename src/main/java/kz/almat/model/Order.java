@@ -43,7 +43,7 @@ public class Order {
     @Convert(converter = BooleanConverter.class)
     private Boolean complete = false;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDR_ID", updatable = false)
     private List<OrderProduct> items = new ArrayList<OrderProduct>();
 

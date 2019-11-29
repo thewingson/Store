@@ -21,7 +21,7 @@ public class User {
     @SequenceGenerator(sequenceName = "USR_SEQ_ID", name = "USR_SEQ", allocationSize = 1)
     private Long id;
 
-    @Column(name = "USERNAME")
+    @Column(name = "USRNAME")
     private String username;
 
     @Column(name = "FIRST_NAME")

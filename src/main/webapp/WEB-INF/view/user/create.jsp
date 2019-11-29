@@ -17,8 +17,8 @@
 
 <form action="/users" method="POST">
     Username: <input type="text" name="username" /><br>
-    Firstname: <input type="text" name="firstname" /><br>
-    Lastname: <input type="text" name="lastname" /><br>
+    Firstname: <input type="text" name="firstName" /><br>
+    Lastname: <input type="text" name="lastName" /><br>
     Email: <input type="text" name="email" /><br>
     Password: <input type="text" name="password" /><br>
     Phone: <input type="text" name="phone" /><br>
