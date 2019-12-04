@@ -4,6 +4,7 @@ import kz.almat.model.User;
 import kz.almat.repo.UserRepo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +39,24 @@ public class UserRepoImpl implements UserRepo {
     public void edit(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.update(user);
+    }
+
+    @SuppressWarnings("unchecked")
+    public User getByUsername(String username) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User where username =: username");
+        query.setParameter("username", username);
+        List<User> userList = query.list();
+        return userList.get(0);
+    }
+
+    @SuppressWarnings("unchecked")
+    public User getByUsernameAndPassword(String username, String password) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User where username =: username and password =: password");
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        List<User> userList = query.list();
+        return userList.get(0);
     }
 }

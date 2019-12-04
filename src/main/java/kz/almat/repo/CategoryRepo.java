@@ -8,6 +8,7 @@ public interface CategoryRepo {
 
     List<Category> getAll();
     Category getById(Long id);
+    Category getByIdWithProducts(Long id);
     void add(Category category);
     void delete(Category category);
     void edit(Category category);

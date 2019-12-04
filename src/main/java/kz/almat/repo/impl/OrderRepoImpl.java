@@ -3,6 +3,7 @@ package kz.almat.repo.impl;
 import kz.almat.model.Order;
 import kz.almat.model.enums.OrderStatus;
 import kz.almat.repo.OrderRepo;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -28,6 +29,14 @@ public class OrderRepoImpl implements OrderRepo {
     public Order getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Order.class, id);
+    }
+
+    public Order getByIdWithProduct(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Order order = session.get(Order.class, id);
+        Hibernate.initialize(order.getItems());
+
+        return order;
     }
 
     public Long add() {

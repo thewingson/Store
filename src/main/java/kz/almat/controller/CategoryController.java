@@ -1,9 +1,7 @@
 package kz.almat.controller;
 
 import kz.almat.model.Category;
-import kz.almat.model.Product;
 import kz.almat.service.CategoryService;
-import kz.almat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,9 +15,6 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/categories")
 public class CategoryController {
-
-    @Autowired
-    private ProductService productService;
 
     @Autowired
     private CategoryService categoryService;
@@ -52,12 +47,10 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/products")
     public ModelAndView getProducts(@PathVariable("id") Long id){
 
-        Category category = categoryService.getById(id);
-        List<Product> products = category.getProducts();
+        Category category = categoryService.getByIdWithProducts(id);
 
         ModelAndView map = new ModelAndView("category/category");
         map.addObject("category", category);
-        map.addObject("products", products);
 
         return map;
     }

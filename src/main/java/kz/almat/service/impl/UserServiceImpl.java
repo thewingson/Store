@@ -35,4 +35,12 @@ public class UserServiceImpl implements UserService {
     public void edit(User user) {
         userRepo.edit(user);
     }
+
+    public User getByUsername(String username) {
+        return userRepo.getByUsername(username);
+    }
+
+    public User getByUsernameAndPassword(String username, String password) {
+        return userRepo.getByUsernameAndPassword(username, password);
+    }
 }

@@ -76,7 +76,7 @@ public class ProductController {
                                @RequestParam(value = "categoryId") Long categoryId,
                                @RequestParam(value = "vendorId") Long vendorId){
         Category category = categoryService.getById(categoryId);
-        Vendor vendor= vendorService.getById(vendorId);
+        Vendor vendor = vendorService.getById(vendorId);
         product.setCategory(category);
         product.setVendor(vendor);
         productService.add(product);
@@ -113,6 +113,7 @@ public class ProductController {
         product.setCategory(category);
         product.setVendor(vendor);
         productService.edit(product);
+
         return getList();
     }
 

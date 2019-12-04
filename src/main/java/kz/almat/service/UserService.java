@@ -11,5 +11,7 @@ public interface UserService {
     void add(User user);
     void delete(User user);
     void edit(User user);
+    User getByUsername(String username);
+    User getByUsernameAndPassword(String username, String password);
 
 }

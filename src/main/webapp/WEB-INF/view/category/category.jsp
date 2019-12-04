@@ -25,8 +25,8 @@
         <th>Quantity</th>
         <th>Action</th>
     </tr>
-    <c:if test="${not empty products}">
-        <c:forEach var="product" items="${products}">
+    <c:if test="${not empty category.products}">
+        <c:forEach var="product" items="${category.products}">
             <tr>
                 <td>${product.id}</td>
                 <td>${product.name}</td>

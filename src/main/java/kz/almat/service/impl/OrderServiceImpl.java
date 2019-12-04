@@ -36,6 +36,10 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.getById(id);
     }
 
+    public Order getByIdWithProduct(Long id) {
+        return orderRepo.getByIdWithProduct(id);
+    }
+
     public void add(Map<Long, Integer> cart) {
         //creation of order
         Long orderId = orderRepo.add();

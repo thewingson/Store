@@ -1,11 +1,15 @@
 package kz.almat.model;
 
+import kz.almat.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -13,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "USR")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Column(name = "ID")
@@ -43,4 +47,29 @@ public class User {
     @JoinColumn(name = "USR_ID", updatable = false)
     private List<Order> orders = new ArrayList<Order>();
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "USR_ROLE", joinColumns = @JoinColumn(name = "USR_ID"))
+    @Column(name = "ROLE_ID")
+//    @Enumerated(EnumType.STRING)
+    private List<Role> roles = new ArrayList<Role>();
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
+    }
 }

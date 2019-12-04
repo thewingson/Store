@@ -7,7 +7,8 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{
                 AppConfig.class,
-                HibernateConfig.class
+                HibernateConfig.class,
+                SecurityConfig.class
         };
     }
 
@@ -23,4 +24,6 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+
 }

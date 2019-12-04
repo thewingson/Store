@@ -48,8 +48,8 @@ public class Order {
     private List<OrderProduct> items = new ArrayList<OrderProduct>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USR_ID", foreignKey = @ForeignKey(name = "PRODUCT_CATEGORY_FK"))
-//    @NotNull
+    @JoinColumn(name = "USR_ID", foreignKey = @ForeignKey(name = "ORDR_USR_FK"))
+    @NotNull
     private User user;
 
 }

@@ -24,6 +24,10 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepo.getById(id);
     }
 
+    public Category getByIdWithProducts(Long id) {
+        return categoryRepo.getByIdWithProducts(id);
+    }
+
     public void add(Category category) {
         categoryRepo.add(category);
     }

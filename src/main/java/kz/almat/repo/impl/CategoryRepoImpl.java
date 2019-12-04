@@ -1,7 +1,9 @@
 package kz.almat.repo.impl;
 
 import kz.almat.model.Category;
+import kz.almat.model.Product;
 import kz.almat.repo.CategoryRepo;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,15 @@ public class CategoryRepoImpl implements CategoryRepo {
     public Category getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Category.class, id);
+    }
+
+    public Category getByIdWithProducts(Long id) {
+
+        Session session = sessionFactory.getCurrentSession();
+        Category category = session.get(Category.class, id);
+        Hibernate.initialize(category.getProducts());
+
+        return category;
     }
 
     public void add(Category category) {

@@ -9,6 +9,7 @@ public interface OrderService {
 
     List<Order> getAll();
     Order getById(Long id);
+    Order getByIdWithProduct(Long id);
     void add(Map<Long, Integer> cart);
     void delete(Order order);
     void edit(Order order);

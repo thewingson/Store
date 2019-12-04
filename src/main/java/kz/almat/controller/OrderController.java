@@ -37,17 +37,6 @@ public class OrderController {
         return getList();
     }
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-//    public ModelAndView getById(@PathVariable("id") Long id){
-//
-//        Order order = orderService.getById(id);
-//
-//        ModelAndView map = new ModelAndView("order/order");
-//        map.addObject("order", order);
-//
-//        return map;
-//    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ModelAndView getProducts(@PathVariable("id") Long id){
 
