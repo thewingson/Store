@@ -27,7 +27,7 @@ public class AuthController {
 //
 //    }
 
-    @RequestMapping(method = RequestMethod.GET, value = {"", "/signUp"})
+    @RequestMapping(method = RequestMethod.GET, value = "/signUp")
     public ModelAndView signUp(){
 
         ModelAndView map = new ModelAndView("auth/sign-up");

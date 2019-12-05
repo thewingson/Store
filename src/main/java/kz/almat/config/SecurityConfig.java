@@ -18,17 +18,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
 
 //    @Bean
+//    public BCryptPasswordEncoder getBCryptPasswordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
+
+//    @Bean
 //    public AuthenticationProvider getAuthenticationProvider(){
 //        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 //        provider.setUserDetailsService(userDetailsService);
+//        provider.setPasswordEncoder(getBCryptPasswordEncoder());
 //        return  provider;
 //    }
 
 //    @Autowired
 //    public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 //        auth
-//                .userDetailsService(userDetailsService)
-//                .passwordEncoder(getShaPasswordEncoder());
+//                .userDetailsService(getUserDetailsService())
+//                .passwordEncoder(getBCryptPasswordEncoder());
 //    }
 
 
@@ -41,33 +47,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-
         http
-                // starts authorizing configurations
                 .authorizeRequests()
-                // ignoring the guest's urls "
-                .antMatchers("/users/**").hasAuthority("ADMIN")
-                .antMatchers("/orders/**").authenticated()
-                .antMatchers("/products/**").permitAll()
-                // authenticate all remaining URLS
-                .anyRequest().permitAll()
-                .and()
-                /* "/logout" will log the user out by invalidating the HTTP Session,
-                 * cleaning up any {link rememberMe()} authentication that was configured, */
-                .logout().permitAll()
-                .and()
-                // enabling the basic authentication
-//                .httpBasic()
-//                .and()
-                // disabling the CSRF - Cross Site Request Forgery
-                .csrf().disable();
 
+                .antMatchers("/**/create", "/**/delete/**", "/**/update/**").hasAuthority("ADMIN")
+                .antMatchers("/orders/**").authenticated()
+
+                .anyRequest().permitAll()
+
+                .and()
+                .formLogin()
+                .loginPage("/login")
+//                .loginProcessingUrl("/authentication_check")
+//                .failureUrl("/login?error")
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+                .permitAll()
+
+                .and()
+                .logout().permitAll()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+
+                .and()
+                .csrf().disable();
 
     }
 
-//    @Bean
-//    public BCryptPasswordEncoder getShaPasswordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
+
 
 }

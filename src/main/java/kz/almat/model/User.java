@@ -8,9 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -48,10 +46,11 @@ public class User implements UserDetails {
     private List<Order> orders = new ArrayList<Order>();
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+//    @Column(name = "ROLE_ID")
+    @Column(name = "ROLE")
     @CollectionTable(name = "USR_ROLE", joinColumns = @JoinColumn(name = "USR_ID"))
-    @Column(name = "ROLE_ID")
-//    @Enumerated(EnumType.STRING)
-    private List<Role> roles = new ArrayList<Role>();
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<Role>();
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();

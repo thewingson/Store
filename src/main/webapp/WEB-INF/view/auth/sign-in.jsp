@@ -13,10 +13,17 @@
 <body>
 <h2>Sign In</h2>
 
-<form action="/auth/signIn" method="POST">
+<%--<c:url value="/authentication_check" var="loginUrl" />--%>
+<%--<form action="/auth/signIn" method="POST">--%>
+<form action="/authentication_check" method="POST">
     Username: <input type="text" name="username" /><br>
     Password: <input type="password" name="password" /><br>
     <input type="submit" value="Sign In"/>
 </form>
+
+        <%--<input type="text" class="form-control" name="j_username" placeholder="Email address" required autofocus value="colibri">--%>
+        <%--<input type="password" class="form-control" name="j_password" placeholder="Password" required value="1234">--%>
+        <%--<button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>--%>
+
 </body>
 </html>

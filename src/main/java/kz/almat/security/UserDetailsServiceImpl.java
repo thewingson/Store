@@ -22,18 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User does not exist!");
         }
 
-//        Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
-//
-//        for (Role role : user.getRoles()) {
-//            roles.add(new SimpleGrantedAuthority(role.name()));
-//        }
-//
-//        roles.add(new SimpleGrantedAuthority(Role.USER.name()));
-//
-//        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), roles);
-//
-//        return userDetails;
-
         return user;
     }
 }
