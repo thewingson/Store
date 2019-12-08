@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Data
@@ -24,6 +25,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "USRNAME")
+    @NotNull
     private String username;
 
     @Column(name = "FIRST_NAME")
@@ -33,9 +35,11 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = "EMAIL")
+    @NotNull
     private String email;
 
     @Column(name = "PASSWORD")
+    @NotNull
     private String password;
 
     @Column(name = "PHONE")
@@ -46,7 +50,6 @@ public class User implements UserDetails {
     private List<Order> orders = new ArrayList<Order>();
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @Column(name = "ROLE_ID")
     @Column(name = "ROLE")
     @CollectionTable(name = "USR_ROLE", joinColumns = @JoinColumn(name = "USR_ID"))
     @Enumerated(EnumType.STRING)
