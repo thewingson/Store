@@ -29,6 +29,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/WEB-INF/view/**").addResourceLocations("/view/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
 
     @Bean
