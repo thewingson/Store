@@ -24,23 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(4);
     }
 
-
-//    @Bean
-//    public AuthenticationProvider getAuthenticationProvider(){
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setUserDetailsService(userDetailsService);
-//        provider.setPasswordEncoder(getBCryptPasswordEncoder());
-//        return  provider;
-//    }
-
-//    @Autowired
-//    public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .userDetailsService(getUserDetailsService())
-//                .passwordEncoder(getBCryptPasswordEncoder());
-//    }
-
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -60,11 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .formLogin()
-                .loginPage("/login")
-//                .loginProcessingUrl("/authentication_check")
-//                .failureUrl("/login?error")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
+                .loginPage("/sign-in")
+                .failureUrl("/login?error")
                 .permitAll()
 
                 .and()

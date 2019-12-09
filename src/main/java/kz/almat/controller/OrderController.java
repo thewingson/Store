@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -49,16 +50,21 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/addToCart/{id}")
-    public void addToCart(@PathVariable(value = "id") Long id,
+    public RedirectView addToCart(@PathVariable(value = "id") Long id,
                                   HttpSession session){
         Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
+        Integer cartSize = (Integer)session.getAttribute("cartSize");
         if(cart.containsKey(id)){
             cart.put(id, cart.get(id) + 1);
         } else {
             cart.put(id, 1);
         }
+        cartSize++;
 
         session.setAttribute("cart", cart);
+        session.setAttribute("cartSize", cartSize);
+
+        return new RedirectView("/products");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cart")

@@ -4,6 +4,7 @@ import kz.almat.model.User;
 import kz.almat.repo.UserRepo;
 import kz.almat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public List<User> getAll() {
         return userRepo.getAll();
     }
@@ -25,6 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void add(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepo.add(user);
     }
 

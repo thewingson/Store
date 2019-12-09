@@ -1,9 +1,9 @@
 
 -- insert USR
 insert into USR(ID, USRNAME, PASSWORD, EMAIL, FIRST_NAME, LAST_NAME, PHONE)
-        values (USR_SEQ_ID.nextval, 'bekzat', 'almat', 'almat', 'almat', 'almat', '87081997727');
+        values (USR_SEQ_ID.nextval, 'almat', '$2y$04$zdhtWgHeKoOGZMJj5FmQkeLv.UH1moHIQRatCx3BacniJzrZL418S', 'almat', 'almat', 'almat', '87081997727');
 insert into USR(ID, USRNAME, PASSWORD, EMAIL, FIRST_NAME, LAST_NAME, PHONE)
-        values (USR_SEQ_ID.nextval, 'admin', 'admin', 'admin', 'admin', 'admin', '88888888888');
+        values (USR_SEQ_ID.nextval, 'admin', '$2y$04$nwxHD9rdGIbgN6TwAYSkLOeEnsmAXddDTX5yA5sLm8337yZ3quATi', 'admin', 'admin', 'admin', '88888888888');
 
 -- insert USR_ROLE
 insert into USR_ROLE(USR_ID, ROLE)

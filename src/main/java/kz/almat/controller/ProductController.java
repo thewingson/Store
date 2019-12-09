@@ -32,9 +32,13 @@ public class ProductController {
     private ModelAndView getList(){
 
         List<Product> products = productService.getAll();
+        List<Category> categories = categoryService.getAll();
+        List<Vendor> vendors = vendorService.getAll();
 
         ModelAndView map = new ModelAndView("product/products");
         map.addObject("products", products);
+        map.addObject("categories", categories);
+        map.addObject("vendors", vendors);
 
         return map;
     }
@@ -44,7 +48,9 @@ public class ProductController {
 
         if(session.getAttribute("cart") == null){
             Map<Long, Integer> cart = new HashMap<Long, Integer>();
+            Integer cartSize = 0;
             session.setAttribute("cart", cart);
+            session.setAttribute("cartSize", cartSize);
         }
 
         return getList();
