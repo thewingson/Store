@@ -2,9 +2,11 @@ package kz.almat.config;
 
 import kz.almat.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,10 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @ComponentScan("kz.almat.security")
+@PropertySource(value= {"classpath:security.properties"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Value("${security.sign-in.message.invalid}")
+    private String invalidDataSignIn;
+    @Value("${security.sign-in.message.sign-out}")
+    private String signInAfterSignOut;
 
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
@@ -36,21 +44,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 
-                .antMatchers("/**/create", "/**/delete/**", "/**/update/**").hasAuthority("ADMIN")
+                .antMatchers("/vendors/**","/users/**","/**/create", "/**/delete/**", "/**/update/**").hasAuthority("ADMIN")
                 .antMatchers("/orders/**").authenticated()
+                .antMatchers("/orders/cart", "/orders/addToCart/**", "/orders/removeFromCart/**").permitAll()
 
                 .anyRequest().permitAll()
 
                 .and()
                 .formLogin()
                 .loginPage("/sign-in")
-                .failureUrl("/login?error")
+                .failureUrl("/auth/signIn?message=" + invalidDataSignIn)
                 .permitAll()
 
                 .and()
                 .logout().permitAll()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
+                .logoutUrl("/sign-out")
+                .logoutSuccessUrl("auth/signIn?message=" + signInAfterSignOut)
                 .invalidateHttpSession(true)
 
                 .and()

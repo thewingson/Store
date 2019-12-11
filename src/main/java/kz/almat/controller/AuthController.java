@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping(value = "/auth")
 public class AuthController {
@@ -19,9 +21,13 @@ public class AuthController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = {"", "/signIn"})
-    public ModelAndView signIn(){
+    public ModelAndView signIn(@RequestParam(value = "message", required = false) String message){
 
         ModelAndView map = new ModelAndView("auth/sign-in");
+
+        if(message != null){
+            map.addObject("message", message);
+        }
 
         return map;
     }
@@ -35,7 +41,7 @@ public class AuthController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/signUp")
-    public RedirectView signUpDo(@ModelAttribute("user") User user,
+    public RedirectView signUp(@ModelAttribute("user") User user,
                                  @RequestParam("confirmPassword") String confirmPassword){
         if(user.getPassword().equals(confirmPassword)){
             userService.add(user);
@@ -45,6 +51,14 @@ public class AuthController {
         redirectView.addStaticAttribute("username", user.getUsername());
         redirectView.addStaticAttribute("password", user.getPassword());
         return redirectView;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/saveSession")
+    public RedirectView saveSession(HttpSession httpSession){
+
+        httpSession.setAttribute("username", "active");
+
+        return new RedirectView("/products");
     }
 
 }

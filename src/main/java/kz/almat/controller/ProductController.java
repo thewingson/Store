@@ -3,6 +3,7 @@ package kz.almat.controller;
 import kz.almat.model.Category;
 import kz.almat.model.Product;
 import kz.almat.model.Vendor;
+import kz.almat.model.dto.ProductFilterDTO;
 import kz.almat.service.CategoryService;
 import kz.almat.service.ProductService;
 import kz.almat.service.VendorService;
@@ -63,6 +64,27 @@ public class ProductController {
 
         ModelAndView map = new ModelAndView("product/product");
         map.addObject("product", product);
+
+        return map;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/filter")
+    public ModelAndView getByFilter(@RequestParam(value = "vendor", defaultValue = "") String vendor,
+                                    @RequestParam(value = "minPrice", defaultValue = "0") Integer minPrice,
+                                    @RequestParam(value = "maxPrice", defaultValue = "100") Integer maxPrice,
+                                    @RequestParam(value = "name", defaultValue = "") String name){
+
+        ProductFilterDTO productFilterDTO = new ProductFilterDTO(name, vendor, minPrice, maxPrice);
+        List<Product> products = productService.getByFilter(productFilterDTO);
+
+        List<Category> categories = categoryService.getAll();
+        List<Vendor> vendors = vendorService.getAll();
+
+        ModelAndView map = new ModelAndView("product/products");
+
+        map.addObject("products", products);
+        map.addObject("categories", categories);
+        map.addObject("vendors", vendors);
 
         return map;
     }

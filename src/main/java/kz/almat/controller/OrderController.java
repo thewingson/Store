@@ -1,7 +1,9 @@
 package kz.almat.controller;
 
 import kz.almat.model.Order;
+import kz.almat.model.Product;
 import kz.almat.service.OrderService;
+import kz.almat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ProductService productService;
 
     private ModelAndView getList(){
 
@@ -64,13 +69,35 @@ public class OrderController {
         session.setAttribute("cart", cart);
         session.setAttribute("cartSize", cartSize);
 
+
         return new RedirectView("/products");
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/removeFromCart/{id}")
+    public RedirectView removeFromCart(@PathVariable(value = "id") Long id,
+                                  HttpSession session){
+        Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
+        Integer cartSize = (Integer)session.getAttribute("cartSize");
+        if(cart.containsKey(id)){
+            cart.put(id, cart.get(id) - 1);
+        }
+        cartSize--;
+
+        session.setAttribute("cart", cart);
+        session.setAttribute("cartSize", cartSize);
+
+        return new RedirectView("/cart");
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/cart")
-    public ModelAndView cart(){
+    public ModelAndView cart(HttpSession session){
+
+        Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
+
+        Map<Product, Integer> products = productService.getCartItems(cart);
 
         ModelAndView map = new ModelAndView("order/cart");
+        map.addObject("products", products);
 
         return map;
     }

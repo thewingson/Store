@@ -41,6 +41,7 @@ public class AppConfig implements WebMvcConfigurer {
         return bean;
     }
 
+
     @Bean(initMethod = "migrate")
     public Flyway flyway() {
         Flyway flyway = Flyway.configure().baselineOnMigrate(true).locations("/db/migration").dataSource(
@@ -48,7 +49,6 @@ public class AppConfig implements WebMvcConfigurer {
                 environment.getRequiredProperty("jdbc.username"),
                 environment.getRequiredProperty("jdbc.password"))
                 .load();
-//        flyway.migrate();
         return flyway;
     }
 

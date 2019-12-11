@@ -31,9 +31,11 @@
         </div>
         <a class="p-2 text-dark" href="/orders">Orders</a>
 
-        <a class="p-2 text-dark" href="/login">Sign In</a>
+        <c:if test="${null == sessionScope.get(username)}">
+            <a class="p-2 text-dark" href="/auth/signIn">Sign In</a>
+        </c:if>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    <a class="btn btn-outline-primary" href="/auth/signUp">Sign up</a>
 </div>
 
 <div class="container-fluid">
@@ -47,53 +49,61 @@
     </div>
 
     <div class="row container-fluid">
+
         <div class="col-md-3 order-md-1 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Filter</span>
             </h4>
-            <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed bg-dark dropdown">
-                    <div>
-                        <h6 class="my-0"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                            aria-expanded="false">Vendor</a></h6>
-                    </div>
-                </li>
-                <c:if test="${not empty vendors}">
-                    <c:forEach var="vendor" items="${vendors}">
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">${vendor.name}</h6>
-                                <small class="text-muted">Brief description</small>
-                            </div>
-                            <input type="checkbox" value=""/>
-                        </li>
-                    </c:forEach>
-                </c:if>
-            </ul>
+            <form class="needs-validation" novalidate action="/products/filter" method="get">
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed bg-dark dropdown">
+                        <div>
+                            <h6 class="my-0"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                                aria-expanded="false">Vendor</a></h6>
+                        </div>
+                    </li>
 
-            <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed bg-dark dropdown">
-                    <div>
-                        <h6 class="my-0"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                            aria-expanded="false">Price</a></h6>
-                    </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <form class="card p-2">
-                            <div class="input-group">
-                                <input type="number" class="form-control" placeholder="Min...">
-                                <input type="number" class="form-control" placeholder="Max...">
-                            </div>
-                        </form>
-                    </div>
-                </li>
-            </ul>
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div class="d-block my-3">
+                            <c:if test="${not empty vendors}">
+                                <c:forEach var="vendor" items="${vendors}">
+                                    <div class="custom-control custom-radio">
+                                        <input id="vendor" name="vendor" type="radio" class="custom-control-input"
+                                               value="${vendor.name}">
+                                        <label class="custom-control-label" for="vendor">${vendor.name}</label>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed bg-dark dropdown">
+                        <div>
+                            <h6 class="my-0"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                                aria-expanded="false">Price</a></h6>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <form class="card p-2">
+                                <div class="input-group">
+                                    <input type="number" name="minPrice" class="form-control" placeholder="Min...">
+                                    <input type="number" name="maxPrice" class="form-control" placeholder="Max...">
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+            </form>
         </div>
+
+
         <div class="col-md-8 order-md-2">
-            <form class="card p-2">
+            <form class="card p-2" action="/products/filter" method="get">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Product name...">
+                    <input type="text" class="form-control" placeholder="Product name..." name="name">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-secondary">Search</button>
                     </div>
@@ -143,7 +153,7 @@
     </div>
 
     <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2018 Company Name</p>
+        <p class="mb-1">&copy; Almat Rakhmetolla 2019</p>
         <ul class="list-inline">
             <li class="list-inline-item"><a href="#">Privacy</a></li>
             <li class="list-inline-item"><a href="#">Terms</a></li>
