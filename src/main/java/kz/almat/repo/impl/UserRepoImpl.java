@@ -11,12 +11,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class UserRepoImpl implements UserRepo {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @SuppressWarnings("unchecked")
-    public List<User> getAll() {
+        public List<User> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery(" from User ").list();
     }
@@ -26,9 +26,9 @@ public class UserRepoImpl implements UserRepo {
         return session.get(User.class, id);
     }
 
-    public void add(User user) {
+    public User add(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(user);
+        return (User) session.save(user);
     }
 
     public void delete(User user) {
@@ -41,21 +41,30 @@ public class UserRepoImpl implements UserRepo {
         session.update(user);
     }
 
-    @SuppressWarnings("unchecked")
     public User getByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User where username =: username");
         query.setParameter("username", username);
+        query.setMaxResults(1);
         List<User> userList = query.list();
         return userList.get(0);
     }
 
-    @SuppressWarnings("unchecked")
     public User getByUsernameAndPassword(String username, String password) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User where username =: username and password =: password");
         query.setParameter("username", username);
         query.setParameter("password", password);
+        query.setMaxResults(1);
+        List<User> userList = query.list();
+        return userList.get(0);
+    }
+
+    public User getByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User where email =: email");
+        query.setParameter("email", email);
+        query.setMaxResults(1);
         List<User> userList = query.list();
         return userList.get(0);
     }

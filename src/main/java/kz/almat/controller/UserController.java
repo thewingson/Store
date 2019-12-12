@@ -51,11 +51,11 @@ public class UserController {
         return map;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView create(@ModelAttribute("user") User user){
-        userService.add(user);
-        return getList();
-    }
+//    @RequestMapping(method = RequestMethod.POST)
+//    public ModelAndView create(@ModelAttribute("user") User user){
+//        userService.add(user);
+//        return getList();
+//    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id){
