@@ -49,6 +49,9 @@
             </li>
         </ul>
         <span class="navbar-text">
+<%--            <sec:authorize access="hasRole('ADMIN')">--%>
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" onclick="location.href='/admin'">Manage</button>
+<%--            </sec:authorize>--%>
             <sec:authorize access="!isAuthenticated()">
                 <button class="btn btn-outline-info my-2 my-sm-0" type="submit" onclick="location.href='/auth/signIn'">Sign In</button>
             </sec:authorize>
