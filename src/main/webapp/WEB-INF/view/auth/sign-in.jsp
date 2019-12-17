@@ -1,5 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%--
   Created by IntelliJ IDEA.
   User: Almat_Rakhmetolla
@@ -7,65 +5,119 @@
   Time: 10:43 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<%--<head>--%>
-<%--<link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">--%>
-<%--<title>Sign In</title>--%>
-<%--<link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/sign-in/">--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<%--<!-- Bootstrap core CSS -->--%>
-<%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"--%>
-<%--integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">--%>
-<%--</head>--%>
-<%--<body class="text-center">--%>
-
-<%--<div class="row d-flex justify-content-center">--%>
-<%--<div class="col-md-3 ">--%>
-<%--<form class="form-signin" action="/sign-in" method="post">--%>
-<%--<img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">--%>
-<%--<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>--%>
-<%--<label for="username" class="sr-only">Username</label>--%>
-<%--<input type="text" id="username" class="form-control" name="username" placeholder="Username or email address" required autofocus>--%>
-<%--<label for="inputPassword" class="sr-only">Password</label>--%>
-<%--<input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>--%>
-<%--<div class="checkbox mb-3">--%>
-<%--<label>--%>
-<%--<input type="checkbox" name="rememberMe" value="remember-me"> Remember me--%>
-<%--</label>--%>
-<%--</div>--%>
-<%--<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>--%>
-<%--<p class="mt-5 mb-3 text-muted">&copy; Almat Rakhmetolla 2019</p>--%>
-<%--</form>--%>
-<%--</div>--%>
-<%--</div>--%>
-
-<%--</body>--%>
-
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/WEB-INF/view/style/styles.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
     <title>Sign In</title>
 </head>
+<body>
 
-<body class="text-center">
-
-<h1>Sign in form</h1>
-<form action="/sign-in" method="POST">
-    <div>
-        Username
-        <input type="text" name="username">
-        <%--<p>Username required</p>--%>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Shop Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/products">Home</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            <sec:authorize access="!isAuthenticated()">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                        onclick="location.href='/auth/signUp'">Sign Up</button>
+            </sec:authorize>
+        </span>
     </div>
-    <div>
-        Password
-        <input type="password" name="password">
-        <%--<p>Password required</p>--%>
-    </div>
-    <c:if test="${message != null}">
-        <p>${message}</p>
-    </c:if>
-    <button type="submit">Submit</button>
-</form>
+</nav>
 
+<div class="container-fluid mt-md-5" style="background-color: lavender">
+    <div class="row">
+
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <div class="mt-md-2"/>
+
+
+            <div class="card">
+                <article class="card-body">
+                    <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
+                    <hr>
+                    <p>
+                        <a href="" class="btn btn-block btn-outline-info"> <i class="fab fa-google"></i> Login via
+                            Google</a>
+                        <a href="" class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i> Login
+                            via facebook</a>
+                    </p>
+                    <hr>
+                    <form action="/sign-in" method="post">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                </div>
+                                <input name="username" class="form-control" placeholder="Email or username"
+                                       type="text">
+                            </div> <!-- input-group.// -->
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                </div>
+                                <input name="password" class="form-control" placeholder="******" type="password">
+                            </div> <!-- input-group.// -->
+                        </div> <!-- form-group// -->
+                        <c:if test="${message != null}">
+                            <div class="checkbox text-danger">
+                                <label> ${message} </label>
+                            </div>
+                            <!-- checkbox .// -->
+                        </c:if>
+                        <div class="checkbox">
+                            <label> <input name="rememberMe" type="checkbox"> Remember me </label>
+                        </div> <!-- checkbox .// -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Sign in</button>
+                        </div> <!-- form-group// -->
+                        <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>
+                    </form>
+                </article>
+            </div>
+
+        </div>
+
+        <div class="col-md-4"></div>
+
+    </div>
+</div>
+
+<div class="mt-md-5"/>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
-
 </html>
+

@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()
                 .logoutUrl("/sign-out")
-                .logoutSuccessUrl("auth/signIn?message=" + signInAfterSignOut)
+                .logoutSuccessUrl("/auth/signIn?message=" + signInAfterSignOut)
                 .invalidateHttpSession(true)
 
                 .and()

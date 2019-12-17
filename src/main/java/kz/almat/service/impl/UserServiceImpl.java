@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
             Set<Role> roles = new HashSet<Role>();
             roles.add(Role.USER);
             user.setRoles(roles);
-            registered = userRepo.add(user);
+            registered = userRepo.getById(userRepo.add(user));
         }
         return registered;
     }
@@ -81,18 +81,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean emailExist(String email) {
-        User user = userRepo.getByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return userRepo.getByEmail(email) != null;
     }
 
     private boolean usernameExist(String username) {
-        User user = userRepo.getByUsername(username);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return userRepo.getByUsername(username) != null;
     }
 }

@@ -46,30 +46,40 @@ public class AuthController {
     }
 
 //    @RequestMapping(method = RequestMethod.POST, value = "/signUp")
-//    public RedirectView signUp(@ModelAttribute("user") User user,
-//                                 @RequestParam("confirmPassword") String confirmPassword){
-//        if(user.getPassword().equals(confirmPassword)){
-//            userService.add(user);
+//    public ModelAndView signUp(@ModelAttribute("user") @Valid UserDTO userDTO,
+//                               BindingResult result, WebRequest request, Errors errors){
+//        User registered = new User();
+//        if (!result.hasErrors()) {
+//            registered = userService.add(userDTO, result);
 //        }
-//
-//        RedirectView redirectView = new RedirectView("/login");
-//        redirectView.addStaticAttribute("username", user.getUsername());
-//        redirectView.addStaticAttribute("password", user.getPassword());
-//        return redirectView;
+//        if (registered == null) {
+//            result.rejectValue("email", "message.regError");
+//        }
+//        if (result.hasErrors()) {
+//            return new ModelAndView("/auth/sign-up", "user", userDTO);
+//        }
+//        else {
+//            return new ModelAndView("/auth/sign-in");
+//        }
 //    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/signUp")
     public ModelAndView signUp(@ModelAttribute("user") @Valid UserDTO userDTO,
-                               BindingResult result, WebRequest request, Errors errors){
+                               BindingResult result){
+
+        ModelAndView map = new ModelAndView("auth/sign-up");
+
         User registered = new User();
         if (!result.hasErrors()) {
             registered = userService.add(userDTO, result);
         }
         if (registered == null) {
-            result.rejectValue("email", "message.regError");
+            map.addObject("message", "Email or Username is already in use");
         }
         if (result.hasErrors()) {
-            return new ModelAndView("/auth/sign-up", "user", userDTO);
+            map.addObject("user", userDTO);
+            map.addObject("message", "Not valid inputs");
+            return map;
         }
         else {
             return new ModelAndView("/auth/sign-in");

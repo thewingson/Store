@@ -10,7 +10,7 @@ public interface UserRepo {
 
     User getById(Long id);
 
-    User add(User user);
+    Long add(User user);
 
     void delete(User user);
 

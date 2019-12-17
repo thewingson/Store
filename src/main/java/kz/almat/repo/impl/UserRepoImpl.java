@@ -26,9 +26,9 @@ public class UserRepoImpl implements UserRepo {
         return session.get(User.class, id);
     }
 
-    public User add(User user) {
+    public Long add(User user) {
         Session session = sessionFactory.getCurrentSession();
-        return (User) session.save(user);
+        return (Long) session.save(user);
     }
 
     public void delete(User user) {
@@ -45,9 +45,12 @@ public class UserRepoImpl implements UserRepo {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User where username =: username");
         query.setParameter("username", username);
-        query.setMaxResults(1);
         List<User> userList = query.list();
-        return userList.get(0);
+        if(userList.size() != 0){
+            return userList.get(0);
+        } else {
+            return null;
+        }
     }
 
     public User getByUsernameAndPassword(String username, String password) {
@@ -57,15 +60,22 @@ public class UserRepoImpl implements UserRepo {
         query.setParameter("password", password);
         query.setMaxResults(1);
         List<User> userList = query.list();
-        return userList.get(0);
+        if(userList != null){
+            return userList.get(0);
+        } else {
+            return null;
+        }
     }
 
     public User getByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User where email =: email");
         query.setParameter("email", email);
-        query.setMaxResults(1);
         List<User> userList = query.list();
-        return userList.get(0);
+        if(userList.size() != 0){
+            return userList.get(0);
+        } else {
+            return null;
+        }
     }
 }

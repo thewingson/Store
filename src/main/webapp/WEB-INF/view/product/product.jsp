@@ -6,149 +6,119 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Blog Template for Bootstrap</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/blog/">
-
-    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/WEB-INF/view/style/styles.css">
 
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="blog.css" rel="stylesheet">
+    <title>Products</title>
 </head>
-<%--<body>--%>
-
-<%--<h2>Product</h2>--%>
-
-
-<%--</body>--%>
-
 <body>
 
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Cloth Shop</h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/products">Products</a>
-        <a class="p-2 text-dark dropdown-toggle" id="categoryDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false">Categories</a>
-        <div class="dropdown-menu" aria-labelledby="categoryDropdownMenu">
-            <c:if test="${not empty categories}">
-                <c:forEach var="category" items="${categories}">
-                    <a class="dropdown-item" type="button" href="/categories/${category.id}">${category.name}</a>
-                </c:forEach>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Shop Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/products">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Categories</a>
+                <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
+                    <c:if test="${not empty categories}">
+                        <c:forEach var="category" items="${categories}">
+                            <a class="dropdown-item text-light" href="/categories/${category.id}">${category.name}</a>
+                        </c:forEach>
+                    </c:if>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/orders">Orders</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            <sec:authorize access="!isAuthenticated()">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit" onclick="location.href='/auth/signIn'">Sign In</button>
+            </sec:authorize>
+            <sec:authorize access="!isAuthenticated()">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                        onclick="location.href='/auth/signUp'">Sign Up</button>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <form method="post" action="/sign-out">
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit"
+                            onclick="location.href='/sign-out'">Sign Out</button>
+                </form>
+            </sec:authorize>
+        </span>
+    </div>
+</nav>
+
+<div class="container-fluid mt-md-5" style="background-color: lavender">
+    <div class="row">
+
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6">
+            <div class="mt-md-2"/>
+            <c:if test="${null != product}">
+                <div class="card mb-3">
+                    <img src="https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg"
+                         class="card-img-top" style="max-width: 100%">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text">
+                                ${product.vendor.name}
+                                ${product.category.name}
+                                $ ${product.price}</p>
+
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <a href="#" class="btn btn-primary" href="/products/${product.id}">Read more</a>
+                        <a href="#" class="btn btn-primary" href="/orders/addToCart/${product.id}">Add to
+                            cart</a>
+                    </div>
+                </div>
+            </c:if>
+
+            <c:if test="${null == product}">
+                <div class="card text-center border-danger mb-3 w-100">
+                    <div class="card-body text-danger">
+                        <h5 class="card-title">Ooops</h5>
+                        <p class="card-text">Unfortunately, we did not find the items according to your requirement.
+                            Please, click button below to cancel filter.</p>
+                        <a href="/products" class="btn btn-primary">Cancel</a>
+                    </div>
+                </div>
             </c:if>
         </div>
-        <a class="p-2 text-dark" href="/orders">Orders</a>
 
-        <c:if test="${null == sessionScope.get(username)}">
-            <a class="p-2 text-dark" href="/auth/signIn">Sign In</a>
-        </c:if>
-    </nav>
-    <a class="btn btn-outline-primary" href="/auth/signUp">Sign up</a>
+        <div class="col-md-3"></div>
+
+    </div>
 </div>
 
-<main role="main" class="container">
-    <div class="row">
-        <div class="col-md-8 blog-main">
+<div class="mt-md-5"/>
 
-            <c:if test="${not empty product}">
-                <div class="blog-post">
-                    <h2 class="blog-post-title">${product.name}</h2>
-                    <h3>$${product.price}</h3><p class="blog-post-meta"><a href="/category/${product.category.id}/products">${product.category.name}</a> <a href="/vendors/${product.vendor.id}/products">${product.vendor.name}</a></p>
-                    <hr>
-                    <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus
-                        mus.
-                        Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere
-                        consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                    <h3>Sub-heading</h3>
-                    <ul>
-                        <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                        <li>Donec id elit non mi porta gravida at eget metus.</li>
-                        <li>Nulla vitae elit libero, a pharetra augue.</li>
-                    </ul>
-                    <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
-                </div>
-                <!-- /.blog-post -->
-
-                <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="/orders/addToCart/${product.id}">Add</a>
-                </nav>
-            </c:if>
-
-
-        </div><!-- /.blog-main -->
-
-        <aside class="col-md-4 blog-sidebar">
-            <div class="p-3 mb-3 bg-light rounded">
-                <h4 class="font-italic">About</h4>
-                <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus
-                    sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            </div>
-
-            <div class="p-3">
-                <h4 class="font-italic">Archives</h4>
-                <ol class="list-unstyled mb-0">
-                    <li><a href="#">March 2014</a></li>
-                    <li><a href="#">February 2014</a></li>
-                    <li><a href="#">January 2014</a></li>
-                    <li><a href="#">December 2013</a></li>
-                    <li><a href="#">November 2013</a></li>
-                    <li><a href="#">October 2013</a></li>
-                    <li><a href="#">September 2013</a></li>
-                    <li><a href="#">August 2013</a></li>
-                    <li><a href="#">July 2013</a></li>
-                    <li><a href="#">June 2013</a></li>
-                    <li><a href="#">May 2013</a></li>
-                    <li><a href="#">April 2013</a></li>
-                </ol>
-            </div>
-
-            <div class="p-3">
-                <h4 class="font-italic">Elsewhere</h4>
-                <ol class="list-unstyled">
-                    <li><a href="#">GitHub</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
-                </ol>
-            </div>
-        </aside><!-- /.blog-sidebar -->
-
-    </div><!-- /.row -->
-
-</main><!-- /.container -->
-
-<footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; Almat Rakhmetolla 2019</p>
-    <ul class="list-inline">
-        <li class="list-inline-item"><a href="#">Privacy</a></li>
-        <li class="list-inline-item"><a href="#">Terms</a></li>
-        <li class="list-inline-item"><a href="#">Support</a></li>
-    </ul>
-</footer>
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-<script src="../../assets/js/vendor/popper.min.js"></script>
-<script src="../../dist/js/bootstrap.min.js"></script>
-<script src="../../assets/js/vendor/holder.min.js"></script>
-<script>
-    Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 </html>

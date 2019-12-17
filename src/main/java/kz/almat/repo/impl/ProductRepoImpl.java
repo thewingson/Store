@@ -5,6 +5,7 @@ import kz.almat.model.dto.ProductFilterDTO;
 import kz.almat.repo.ProductRepo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,13 +54,25 @@ public class ProductRepoImpl implements ProductRepo {
 
     public List<Product> getByFilter(ProductFilterDTO filterDTO) {
         Session session = sessionFactory.getCurrentSession();
-        return (List<Product>) session.createQuery(" from Product " +
-                "where " +
-                "name like concat('%',:name,'%') " +
-                "and vendor.name like concat('%',:vendor,'%') " +
-                "and price between :minPrice and :maxPrice")
+
+        StringBuilder queryString = new StringBuilder("from Product where name like concat('%',:name,'%') and category.id=:category and price between :minPrice and :maxPrice");
+
+        if(filterDTO.getVendor() != null){
+            queryString.append(" and vendor.id in(:vendor)");
+
+            return (List<Product>) session.createQuery(queryString.toString())
+                    .setParameter("category", filterDTO.getCategory())
+                    .setParameter("name", filterDTO.getName())
+                    .setParameter("minPrice", filterDTO.getMinPrice())
+                    .setParameter("maxPrice", filterDTO.getMaxPrice())
+                    .setParameterList("vendor", filterDTO.getVendor())
+                    .list();
+
+        }
+
+        return (List<Product>) session.createQuery(queryString.toString())
+                .setParameter("category", filterDTO.getCategory())
                 .setParameter("name", filterDTO.getName())
-                .setParameter("vendor", filterDTO.getVendor())
                 .setParameter("minPrice", filterDTO.getMinPrice())
                 .setParameter("maxPrice", filterDTO.getMaxPrice())
                 .list();

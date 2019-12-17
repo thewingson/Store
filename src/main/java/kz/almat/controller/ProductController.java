@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,12 +70,13 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/filter")
-    public ModelAndView getByFilter(@RequestParam(value = "vendor", defaultValue = "") String vendor,
+    public ModelAndView getByFilter(@RequestParam(value = "vendor", required = false) List<Long> vendorsFilter,
                                     @RequestParam(value = "minPrice", defaultValue = "0") Integer minPrice,
                                     @RequestParam(value = "maxPrice", defaultValue = "100") Integer maxPrice,
+                                    @RequestParam(value = "category", defaultValue = "0") Long category,
                                     @RequestParam(value = "name", defaultValue = "") String name){
 
-        ProductFilterDTO productFilterDTO = new ProductFilterDTO(name, vendor, minPrice, maxPrice);
+        ProductFilterDTO productFilterDTO = new ProductFilterDTO(name, vendorsFilter, category, minPrice, maxPrice);
         List<Product> products = productService.getByFilter(productFilterDTO);
 
         List<Category> categories = categoryService.getAll();
