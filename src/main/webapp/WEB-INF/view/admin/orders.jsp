@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Almat
-  Date: 17.12.2019
-  Time: 16:46
+  Date: 19.12.2019
+  Time: 15:54
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/WEB-INF/view/style/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-    <title>Products</title>
+    <title>Orders</title>
 </head>
 <body>
 
@@ -90,26 +90,26 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Vendor</th>
+                    <th scope="col">Purchased by</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">Ship date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Completed</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <c:if test="${not empty products}">
+                <c:if test="${not empty orders}">
                     <tbody>
-                    <c:forEach var="product" items="${products}">
+                    <c:forEach var="order" items="${orders}">
                         <tr>
-                            <th scope="row">${product.id}</th>
-                            <td>${product.name}</td>
-                            <td>${product.price}</td>
-                            <td>${product.quantity}</td>
-                            <td>${product.category.name}</td>
-                            <td>${product.vendor.name}</td>
+                            <th scope="row">${order.id}</th>
+                            <td>${order.user.username}</td>
+                            <td>${order.createdAt}</td>
+                            <td>${order.shipDate}</td>
+                            <td>${order.status}</td>
+                            <td>${order.complete}</td>
                             <td>
-                                <a class="text-danger" href="/products/delete/${product.id}"><i class="fa fa-trash-alt"></i></a> <a class="text-info" href="/products/update/${product.id}"><i class="fa fa-edit"></i></a>
+                                <a class="text-danger" href="/orders/delete/${order.id}"><i class="fa fa-trash-alt"></i></a> <a class="text-info" href="/orders/update/${order.id}"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     </c:forEach>

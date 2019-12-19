@@ -49,9 +49,13 @@
             </li>
         </ul>
         <span class="navbar-text">
-<%--            <sec:authorize access="hasRole('ADMIN')">--%>
-                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" onclick="location.href='/admin'">Manage</button>
+<%--            <sec:authorize access="hasAnyRole('ADMIN')">--%>
+<%--                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" onclick="location.href='/admin'">Manage</button>--%>
 <%--            </sec:authorize>--%>
+            <sec:authorize access="isAuthenticated()">
+                        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit"
+                                onclick="location.href='/admin'">Manage</button>
+            </sec:authorize>
             <sec:authorize access="!isAuthenticated()">
                 <button class="btn btn-outline-info my-2 my-sm-0" type="submit" onclick="location.href='/auth/signIn'">Sign In</button>
             </sec:authorize>
@@ -167,7 +171,8 @@
                 <div class="card text-center border-danger mb-3 w-100">
                     <div class="card-body text-danger">
                         <h5 class="card-title">Ooops</h5>
-                        <p class="card-text">Unfortunately, we did not find the items according to your requirement. Please, click button below to cancel filter.</p>
+                        <p class="card-text">Unfortunately, we did not find the items according to your requirement.
+                            Please, click button below to cancel filter.</p>
                         <a href="/products" class="btn btn-primary">Cancel</a>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Almat
-  Date: 17.12.2019
-  Time: 16:46
+  Date: 19.12.2019
+  Time: 14:50
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/WEB-INF/view/style/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-    <title>Products</title>
+    <title>Categories</title>
 </head>
 <body>
 
@@ -91,25 +91,17 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Vendor</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <c:if test="${not empty products}">
+                <c:if test="${not empty categories}">
                     <tbody>
-                    <c:forEach var="product" items="${products}">
+                    <c:forEach var="category" items="${categories}">
                         <tr>
-                            <th scope="row">${product.id}</th>
-                            <td>${product.name}</td>
-                            <td>${product.price}</td>
-                            <td>${product.quantity}</td>
-                            <td>${product.category.name}</td>
-                            <td>${product.vendor.name}</td>
+                            <th scope="row">${category.id}</th>
+                            <td>${category.name}</td>
                             <td>
-                                <a class="text-danger" href="/products/delete/${product.id}"><i class="fa fa-trash-alt"></i></a> <a class="text-info" href="/products/update/${product.id}"><i class="fa fa-edit"></i></a>
+                                <a class="text-danger" href="/categories/delete/${category.id}"><i class="fa fa-trash-alt"></i></a> <a class="text-info" href="/categories/update/${category.id}"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -134,4 +126,5 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+
 
