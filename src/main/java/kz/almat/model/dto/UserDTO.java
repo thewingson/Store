@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,36 +18,29 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class UserDTO {
 
-    @NotNull
-    @NotEmpty
+    @NotBlank(message = "Username is required")
     private String username;
 
-    @NotNull
-    @NotEmpty
-    @Size(min = 8)
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Minimum length of password must be 8")
     private String password;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
     @Size(min = 8)
     private String confirmPassword;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank(message = "First name is required")
     private String firstName;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank(message = "Last name is required")
     private String lastName;
 
     @ValidEmail
-    @NotNull
-    @NotEmpty
+    @NotBlank(message = "Email is required")
     private String email;
 
     @ValidPhone
-    @NotNull
-    @NotEmpty
+    @NotBlank(message = "Phone number is required")
     private String phone;
 
 }

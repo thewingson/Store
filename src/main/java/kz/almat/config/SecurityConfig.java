@@ -57,10 +57,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
 
                 .and()
-                .logout().permitAll()
+                .logout().permitAll().deleteCookies("JSESSIONID")
                 .logoutUrl("/sign-out")
                 .logoutSuccessUrl("/auth/signIn?message=" + signInAfterSignOut)
                 .invalidateHttpSession(true)
+
+                .and()
+                .rememberMe().key("rememberMe").tokenValiditySeconds(86400)
 
                 .and()
                 .csrf().disable();

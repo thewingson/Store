@@ -7,6 +7,8 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!doctype html>
 <html lang="en">
@@ -58,85 +60,93 @@
                     <h4 class="card-title text-center mb-4 mt-1">Sign Up</h4>
                     <hr>
                     <hr>
-                    <form action="/auth/signUp" method="post">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                                </div>
-                                <input name="username" class="form-control" placeholder="Username"
-                                       type="text">
-                            </div> <!-- input-group.// -->
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                                </div>
-                                <input name="password" class="form-control" placeholder="******" type="password">
-                            </div> <!-- input-group.// -->
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                                </div>
-                                <input name="confirmPassword" class="form-control" placeholder="******" type="password">
-                            </div> <!-- input-group.// -->
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-ad"></i> </span>
-                                </div>
-                                <input name="firstName" class="form-control" placeholder="First name"
-                                       type="text">
-                            </div> <!-- input-group.// -->
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-ad"></i> </span>
-                                </div>
-                                <input name="lastName" class="form-control" placeholder="Last name"
-                                       type="text">
-                            </div> <!-- input-group.// -->
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-at"></i> </span>
-                                </div>
-                                <input name="email" class="form-control" placeholder="Email"
-                                       type="email">
-                            </div> <!-- input-group.// -->
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"> <i class="fa fa-mobile-alt"></i> </span>
-                                </div>
-                                <input name="phone" class="form-control" placeholder="Phone"
-                                       type="number">
-                            </div> <!-- input-group.// -->
-                        </div> <!-- form-group// -->
-                        <c:if test="${message != null}">
-                            <div class="checkbox text-danger">
-                                <label> ${message} </label>
+                    <form:form modelAttribute="user" action="/auth/signUp" method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
-                            <!-- checkbox .// -->
-                        </c:if>
-                            <button type="submit" class="btn btn-primary btn-block"> Sign Up</button>
-                        </div> <!-- form-group// -->
-                    </form>
-                </article>
-            </div>
-
+                            <input name="username" class="form-control" placeholder="Username"
+                                   type="text">
+                            <form:errors path="username" cssClass="error"/>
+                        </div> <!-- input-group.// -->
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input name="password" class="form-control" placeholder="******" type="password">
+                        </div> <!-- input-group.// -->
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input name="confirmPassword" class="form-control" placeholder="******" type="password">
+                        </div> <!-- input-group.// -->
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-ad"></i> </span>
+                            </div>
+                            <input name="firstName" class="form-control" placeholder="First name"
+                                   type="text">
+                        </div> <!-- input-group.// -->
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-ad"></i> </span>
+                            </div>
+                            <input name="lastName" class="form-control" placeholder="Last name"
+                                   type="text">
+                        </div> <!-- input-group.// -->
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-at"></i> </span>
+                            </div>
+                            <input name="email" class="form-control" placeholder="Email"
+                                   type="email">
+                            <form:errors path="username"/>
+                        </div> <!-- input-group.// -->
+                    </div> <!-- form-group// -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-mobile-alt"></i> </span>
+                            </div>
+                            <input name="phone" class="form-control" placeholder="Phone"
+                                   type="number">
+                        </div> <!-- input-group.// -->
+                    </div> <!-- form-group// -->
+                    <c:if test="${message != null}">
+                    <div class="checkbox text-danger">
+                        <label> ${message} </label>
+                    </div>
+                    <spring:hasBindErrors name="user">
+                    <c:forEach var="error" items="${errors.allErrors}">
+                    <b><spring:message message="${error}"/></b>
+                    <br/>
+                    </c:forEach>
+                    </spring:hasBindErrors>
+                    <!-- checkbox .// -->
+                    </c:if>
+                    <button type="submit" class="btn btn-primary btn-block"> Sign Up</button>
+            </div> <!-- form-group// -->
+            </form:form>
+            </article>
         </div>
 
-        <div class="col-md-4"></div>
-
     </div>
+
+    <div class="col-md-4"></div>
+
+</div>
 </div>
 
 <div class="mt-md-5"/>

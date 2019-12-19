@@ -3,8 +3,10 @@ package kz.almat.controller;
 import kz.almat.model.User;
 import kz.almat.model.dto.UserDTO;
 import kz.almat.service.UserService;
+import kz.almat.util.ErrorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/auth")
@@ -65,18 +68,20 @@ public class AuthController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/signUp")
     public ModelAndView signUp(@ModelAttribute("user") @Valid UserDTO userDTO,
-                               BindingResult result){
+                               BindingResult bindingResult, Model model){
 
         ModelAndView map = new ModelAndView("auth/sign-up");
 
         User registered = new User();
-        if (!result.hasErrors()) {
-            registered = userService.add(userDTO, result);
+        if (!bindingResult.hasErrors()) {
+            registered = userService.add(userDTO, bindingResult);
         }
         if (registered == null) {
             map.addObject("message", "Email or Username is already in use");
         }
-        if (result.hasErrors()) {
+        if (bindingResult.hasErrors()) {
+//            Map<String, String> errorsMap = ErrorUtil.getErrors(bindingResult);
+
             map.addObject("user", userDTO);
             map.addObject("message", "Not valid inputs");
             return map;
