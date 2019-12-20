@@ -48,45 +48,25 @@ public class AuthController {
         return map;
     }
 
-//    @RequestMapping(method = RequestMethod.POST, value = "/signUp")
-//    public ModelAndView signUp(@ModelAttribute("user") @Valid UserDTO userDTO,
-//                               BindingResult result, WebRequest request, Errors errors){
-//        User registered = new User();
-//        if (!result.hasErrors()) {
-//            registered = userService.add(userDTO, result);
-//        }
-//        if (registered == null) {
-//            result.rejectValue("email", "message.regError");
-//        }
-//        if (result.hasErrors()) {
-//            return new ModelAndView("/auth/sign-up", "user", userDTO);
-//        }
-//        else {
-//            return new ModelAndView("/auth/sign-in");
-//        }
-//    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/signUp")
     public ModelAndView signUp(@ModelAttribute("user") @Valid UserDTO userDTO,
                                BindingResult bindingResult, Model model){
 
         ModelAndView map = new ModelAndView("auth/sign-up");
 
-        User registered = new User();
-        if (!bindingResult.hasErrors()) {
+        User registered;
+
+        if(bindingResult.hasErrors()){
+            map.addObject("user", userDTO);
+            return map;
+        } else {
             registered = userService.add(userDTO, bindingResult);
         }
-        if (registered == null) {
-            map.addObject("message", "Email or Username is already in use");
-        }
-        if (bindingResult.hasErrors()) {
-//            Map<String, String> errorsMap = ErrorUtil.getErrors(bindingResult);
 
+        if(registered == null){
             map.addObject("user", userDTO);
-            map.addObject("message", "Not valid inputs");
             return map;
-        }
-        else {
+        } else {
             return new ModelAndView("/auth/sign-in");
         }
     }

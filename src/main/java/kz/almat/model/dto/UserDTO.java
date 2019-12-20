@@ -25,8 +25,7 @@ public class UserDTO {
     @Size(min = 8, message = "Minimum length of password must be 8")
     private String password;
 
-    @NotBlank
-    @Size(min = 8)
+    @NotBlank(message = "Confirm password")
     private String confirmPassword;
 
     @NotBlank(message = "First name is required")
@@ -35,12 +34,12 @@ public class UserDTO {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @ValidEmail
     @NotBlank(message = "Email is required")
+    @ValidEmail
     private String email;
 
-    @ValidPhone
     @NotBlank(message = "Phone number is required")
+    @ValidPhone
     private String phone;
 
 }

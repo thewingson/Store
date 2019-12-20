@@ -8,6 +8,8 @@ import kz.almat.model.enums.Role;
 import kz.almat.repo.UserRepo;
 import kz.almat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import java.util.Set;
 
 @Service
 @Transactional
+@PropertySource(value= {"classpath:security.properties"})
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -26,6 +29,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${security.sign-up.message.username.exist}")
+    private String USERNAME_EXIST;
+
+    @Value("${security.sign-up.message.email.exist}")
+    private String EMAIL_EXIST;
 
     public List<User> getAll() {
         return userRepo.getAll();
@@ -35,19 +44,18 @@ public class UserServiceImpl implements UserService {
         return userRepo.getById(id);
     }
 
-    public User add(UserDTO userDTO, BindingResult result) {
+    public User add(UserDTO userDTO, BindingResult bindingResult) {
 
-        User registered = null;
-        if (emailExist(userDTO.getEmail())) {
-            throw new EmailExistsException(
-                    "There is an account with that email adress: "
-                            +  userDTO.getEmail());
-        } if(usernameExist(userDTO.getUsername())) {
-            throw new UsernameExistsException(
-                    "There is an account with that username: "
-                            +  userDTO.getUsername());
-        }
-        else {
+        User registered;
+
+        try {
+            if (emailExist(userDTO.getEmail())) {
+                throw new EmailExistsException(bindingResult, EMAIL_EXIST + userDTO.getEmail());
+            }
+            if (usernameExist(userDTO.getUsername())) {
+                throw new UsernameExistsException(bindingResult, USERNAME_EXIST + userDTO.getUsername());
+            }
+
             User user = new User();
             user.setUsername(userDTO.getUsername());
             user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
@@ -60,8 +68,36 @@ public class UserServiceImpl implements UserService {
             roles.add(Role.USER);
             user.setRoles(roles);
             registered = userRepo.getById(userRepo.add(user));
+
+            return registered;
+
+        } catch (EmailExistsException | UsernameExistsException e) {
+            return null;
         }
-        return registered;
+
+//        return registered;
+
+//        if (emailExist(userDTO.getEmail())) {
+//            throw new EmailExistsException(bindingResult, userDTO.getEmail());
+//        }
+//        if (usernameExist(userDTO.getUsername())) {
+//            throw new UsernameExistsException(bindingResult, userDTO.getUsername());
+//        } else {
+//            User user = new User();
+//            user.setUsername(userDTO.getUsername());
+//            user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+//            user.setFirstName(userDTO.getPassword());
+//            user.setLastName(userDTO.getLastName());
+//            user.setEmail(userDTO.getEmail());
+//            user.setPhone(userDTO.getPhone());
+//
+//            Set<Role> roles = new HashSet<Role>();
+//            roles.add(Role.USER);
+//            user.setRoles(roles);
+//            registered = userRepo.getById(userRepo.add(user));
+//        }
+//        return registered;
+
     }
 
     public void delete(User user) {
@@ -80,7 +116,7 @@ public class UserServiceImpl implements UserService {
         return userRepo.getByUsernameAndPassword(username, password);
     }
 
-    private boolean emailExist(String email) {
+    private boolean emailExist(String email) throws EmailExistsException {
         return userRepo.getByEmail(email) != null;
     }
 

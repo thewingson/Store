@@ -1,6 +1,5 @@
 package kz.almat.anootation;
 
-import kz.almat.validator.EmailValidator;
 import kz.almat.validator.PhoneValidator;
 
 import javax.validation.Constraint;

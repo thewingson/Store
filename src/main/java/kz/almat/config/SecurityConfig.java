@@ -23,9 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
 
     @Value("${security.sign-in.message.invalid}")
-    private String invalidDataSignIn;
+    private String INVALID_DATA;
     @Value("${security.sign-in.message.sign-out}")
-    private String signInAfterSignOut;
+    private String SIGN_IN;
 
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
@@ -53,13 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/sign-in")
-                .failureUrl("/auth/signIn?message=" + invalidDataSignIn)
+                .failureUrl("/auth/signIn?message=" + INVALID_DATA)
                 .permitAll()
 
                 .and()
                 .logout().permitAll().deleteCookies("JSESSIONID")
                 .logoutUrl("/sign-out")
-                .logoutSuccessUrl("/auth/signIn?message=" + signInAfterSignOut)
+                .logoutSuccessUrl("/auth/signIn?message=" + SIGN_IN)
                 .invalidateHttpSession(true)
 
                 .and()

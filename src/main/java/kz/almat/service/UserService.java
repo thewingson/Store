@@ -12,7 +12,7 @@ public interface UserService {
 
     List<User> getAll();
     User getById(Long id);
-    User add(UserDTO userDTO, BindingResult result) throws EmailExistsException, UsernameExistsException;
+    User add(UserDTO userDTO, BindingResult bindingResult) throws EmailExistsException, UsernameExistsException;
     void delete(User user);
     void edit(User user);
     User getByUsername(String username);
