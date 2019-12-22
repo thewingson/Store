@@ -71,7 +71,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                 </div>
-                                <input name="username" class="form-control" placeholder="Email or username"
+                                <input name="username" class="form-control <c:if test="${message != null}">is-invalid</c:if>"
+                                       placeholder="Email or username"
                                        type="text">
                             </div> <!-- input-group.// -->
                         </div> <!-- form-group// -->
@@ -80,15 +81,14 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                                 </div>
-                                <input name="password" class="form-control" placeholder="******" type="password">
+                                <input name="password" class="form-control <c:if test="${message != null}">is-invalid</c:if>"
+                                       placeholder="******"
+                                       type="password">
+                                <div class="invalid-feedback">
+                                    ${message}
+                                </div>
                             </div> <!-- input-group.// -->
                         </div> <!-- form-group// -->
-                        <c:if test="${message != null}">
-                            <div class="checkbox text-danger">
-                                <label> ${message} </label>
-                            </div>
-                            <!-- checkbox .// -->
-                        </c:if>
                         <div class="checkbox">
                             <label> <input name="rememberMe" type="checkbox"> Remember me </label>
                         </div> <!-- checkbox .// -->
