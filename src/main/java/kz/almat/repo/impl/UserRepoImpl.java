@@ -16,31 +16,37 @@ public class UserRepoImpl implements UserRepo {
     @Autowired
     private SessionFactory sessionFactory;
 
-        public List<User> getAll() {
+    @Override
+    public List<User> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery(" from User ").list();
     }
 
+    @Override
     public User getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(User.class, id);
     }
 
+    @Override
     public Long add(User user) {
         Session session = sessionFactory.getCurrentSession();
         return (Long) session.save(user);
     }
 
+    @Override
     public void delete(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(user);
     }
 
+    @Override
     public void edit(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.update(user);
     }
 
+    @Override
     public User getByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User where username =: username");
@@ -53,6 +59,7 @@ public class UserRepoImpl implements UserRepo {
         }
     }
 
+    @Override
     public User getByUsernameAndPassword(String username, String password) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User where username =: username and password =: password");
@@ -67,10 +74,24 @@ public class UserRepoImpl implements UserRepo {
         }
     }
 
+    @Override
     public User getByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User where email =: email");
         query.setParameter("email", email);
+        List<User> userList = query.list();
+        if(userList.size() != 0){
+            return userList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public User getByPhone(String phone) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User where phone =: phone");
+        query.setParameter("phone", phone);
         List<User> userList = query.list();
         if(userList.size() != 0){
             return userList.get(0);

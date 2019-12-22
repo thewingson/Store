@@ -21,4 +21,6 @@ public interface UserRepo {
     User getByUsernameAndPassword(String username, String password);
 
     User getByEmail(String email);
+
+    User getByPhone(String phone);
 }

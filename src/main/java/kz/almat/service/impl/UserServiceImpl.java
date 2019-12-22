@@ -1,6 +1,7 @@
 package kz.almat.service.impl;
 
 import kz.almat.exception.EmailExistsException;
+import kz.almat.exception.PhoneExistsException;
 import kz.almat.exception.UsernameExistsException;
 import kz.almat.model.User;
 import kz.almat.model.dto.UserDTO;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
     @Value("${security.sign-up.message.email.exist}")
     private String EMAIL_EXIST;
 
+    @Value("${security.sign-up.message.phone.exist}")
+    private String PHONE_EXIST;
+
     public List<User> getAll() {
         return userRepo.getAll();
     }
@@ -55,6 +59,9 @@ public class UserServiceImpl implements UserService {
             if (usernameExist(userDTO.getUsername())) {
                 throw new UsernameExistsException(bindingResult, USERNAME_EXIST + userDTO.getUsername());
             }
+            if (phoneExist(userDTO.getPhone())) {
+                throw new PhoneExistsException(bindingResult, PHONE_EXIST + userDTO.getPhone());
+            }
 
             User user = new User();
             user.setUsername(userDTO.getUsername());
@@ -71,32 +78,9 @@ public class UserServiceImpl implements UserService {
 
             return registered;
 
-        } catch (EmailExistsException | UsernameExistsException e) {
+        } catch (EmailExistsException | UsernameExistsException | PhoneExistsException e) {
             return null;
         }
-
-//        return registered;
-
-//        if (emailExist(userDTO.getEmail())) {
-//            throw new EmailExistsException(bindingResult, userDTO.getEmail());
-//        }
-//        if (usernameExist(userDTO.getUsername())) {
-//            throw new UsernameExistsException(bindingResult, userDTO.getUsername());
-//        } else {
-//            User user = new User();
-//            user.setUsername(userDTO.getUsername());
-//            user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-//            user.setFirstName(userDTO.getPassword());
-//            user.setLastName(userDTO.getLastName());
-//            user.setEmail(userDTO.getEmail());
-//            user.setPhone(userDTO.getPhone());
-//
-//            Set<Role> roles = new HashSet<Role>();
-//            roles.add(Role.USER);
-//            user.setRoles(roles);
-//            registered = userRepo.getById(userRepo.add(user));
-//        }
-//        return registered;
 
     }
 
@@ -116,11 +100,15 @@ public class UserServiceImpl implements UserService {
         return userRepo.getByUsernameAndPassword(username, password);
     }
 
-    private boolean emailExist(String email) throws EmailExistsException {
+    private boolean emailExist(String email) {
         return userRepo.getByEmail(email) != null;
     }
 
     private boolean usernameExist(String username) {
         return userRepo.getByUsername(username) != null;
+    }
+
+    private boolean phoneExist(String phone) {
+        return userRepo.getByPhone(phone) != null;
     }
 }
