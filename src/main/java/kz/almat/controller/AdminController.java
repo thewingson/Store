@@ -2,7 +2,6 @@ package kz.almat.controller;
 
 import kz.almat.model.*;
 import kz.almat.service.*;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,7 @@ public class AdminController {
 
         List<Product> products = productService.getAll();
 
-        ModelAndView map = new ModelAndView("admin/products");
+        ModelAndView map = new ModelAndView("admin/products/products");
         map.addObject("products", products);
 
         return map;
@@ -46,7 +45,7 @@ public class AdminController {
 
         List<Category> categories = categoryService.getAll();
 
-        ModelAndView map = new ModelAndView("admin/categories");
+        ModelAndView map = new ModelAndView("admin/categories/categories");
         map.addObject("categories", categories);
 
         return map;
@@ -57,7 +56,7 @@ public class AdminController {
 
         List<User> users = userService.getAll();
 
-        ModelAndView map = new ModelAndView("admin/users");
+        ModelAndView map = new ModelAndView("admin/users/users");
         map.addObject("users", users);
 
         return map;
@@ -68,7 +67,7 @@ public class AdminController {
 
         List<Vendor> vendors = vendorService.getAll();
 
-        ModelAndView map = new ModelAndView("admin/vendors");
+        ModelAndView map = new ModelAndView("admin/vendors/vendors");
         map.addObject("vendors", vendors);
 
         return map;
@@ -79,7 +78,7 @@ public class AdminController {
 
         List<Order> orders = orderService.getAll();
 
-        ModelAndView map = new ModelAndView("admin/orders");
+        ModelAndView map = new ModelAndView("admin/orders/orders");
         map.addObject("orders", orders);
 
         return map;

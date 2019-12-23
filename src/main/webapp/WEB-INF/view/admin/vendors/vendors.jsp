@@ -101,7 +101,7 @@
                             <th scope="row">${vendor.id}</th>
                             <td>${vendor.name}</td>
                             <td>
-                                <a class="text-danger" href="/products/delete/${product.id}"><i class="fa fa-trash-alt"></i></a> <a class="text-info" href="/products/update/${product.id}"><i class="fa fa-edit"></i></a>
+                                <a class="text-danger" href="/vendors/delete/${vendor.id}"><i class="fa fa-trash-alt"></i></a> <a class="text-info" href="/vendors/update/${vendor.id}"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     </c:forEach>

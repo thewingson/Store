@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -57,21 +58,21 @@ public class CategoryController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public ModelAndView create(){
-        ModelAndView map = new ModelAndView("category/create");
+        ModelAndView map = new ModelAndView("admin/categories/create");
         return map;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView create(@ModelAttribute("category") Category category){
+    public RedirectView create(@ModelAttribute("category") Category category){
         categoryService.add(category);
-        return getList();
+        return new RedirectView("admin/categories");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id){
+    public RedirectView delete(@PathVariable("id") Long id){
         Category category = categoryService.getById(id);
         categoryService.delete(category);
-        return getList();
+        return new RedirectView("admin/categories");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/update/{id}")
@@ -79,16 +80,18 @@ public class CategoryController {
 
         Category category = categoryService.getById(id);
 
-        ModelAndView map = new ModelAndView("category/edit");
+        ModelAndView map = new ModelAndView("admin/categories/edit");
         map.addObject("category", category);
 
         return map;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/update")
-    public ModelAndView update(@ModelAttribute("category") Category category){
+    @RequestMapping(method = RequestMethod.POST, value = "/update/{id}")
+    public RedirectView update(@PathVariable("id") Long id,
+                               @ModelAttribute("category") Category category){
+        category.setId(id);
         categoryService.edit(category);
-        return getList();
+        return new RedirectView("admin/categories");
     }
 
 }

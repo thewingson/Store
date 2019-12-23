@@ -3,7 +3,6 @@ package kz.almat.service.impl;
 import kz.almat.model.Order;
 import kz.almat.model.OrderProduct;
 import kz.almat.model.Product;
-import kz.almat.model.dto.ProductDTO;
 import kz.almat.repo.OrderProductRepo;
 import kz.almat.repo.OrderRepo;
 import kz.almat.repo.ProductRepo;

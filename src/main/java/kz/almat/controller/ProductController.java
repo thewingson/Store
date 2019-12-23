@@ -8,18 +8,20 @@ import kz.almat.service.CategoryService;
 import kz.almat.service.ProductService;
 import kz.almat.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = {"/products", "", "/"})
+@PropertySource(value= {"classpath:model.properties"})
 public class ProductController {
 
     @Autowired
@@ -95,14 +97,14 @@ public class ProductController {
     public ModelAndView create(){
         List<Category> categories = categoryService.getAll();
         List<Vendor> vendors = vendorService.getAll();
-        ModelAndView map = new ModelAndView("product/create");
+        ModelAndView map = new ModelAndView("admin/products/create");
         map.addObject("categories", categories);
         map.addObject("vendors", vendors);
         return map;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView create(@ModelAttribute("product") Product product,
+    public RedirectView create(@ModelAttribute("product") Product product,
                                @RequestParam(value = "categoryId") Long categoryId,
                                @RequestParam(value = "vendorId") Long vendorId){
         Category category = categoryService.getById(categoryId);
@@ -110,14 +112,14 @@ public class ProductController {
         product.setCategory(category);
         product.setVendor(vendor);
         productService.add(product);
-        return getList();
+        return new RedirectView("/admin/products");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id){
+    public RedirectView delete(@PathVariable("id") Long id){
         Product product = productService.getById(id);
         productService.delete(product);
-        return getList();
+        return new RedirectView("/admin/products");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/update/{id}")
@@ -126,7 +128,7 @@ public class ProductController {
         Product product = productService.getById(id);
         List<Category> categories = categoryService.getAll();
         List<Vendor> vendors = vendorService.getAll();
-        ModelAndView map = new ModelAndView("product/edit");
+        ModelAndView map = new ModelAndView("admin/products/edit");
         map.addObject("categories", categories);
         map.addObject("vendors", vendors);
         map.addObject("product", product);
@@ -134,17 +136,19 @@ public class ProductController {
         return map;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/update")
-    public ModelAndView update(@ModelAttribute("product") Product product,
+    @RequestMapping(method = RequestMethod.POST, value = "/update/{id}")
+    public RedirectView update(@ModelAttribute("product") Product product,
+                               @PathVariable("id") Long id,
                                @RequestParam(value = "categoryId") Long categoryId,
                                @RequestParam(value = "vendorId") Long vendorId){
         Category category = categoryService.getById(categoryId);
         Vendor vendor = vendorService.getById(vendorId);
+        product.setId(id);
         product.setCategory(category);
         product.setVendor(vendor);
         productService.edit(product);
 
-        return getList();
+        return new RedirectView("/admin/products");
     }
 
 }

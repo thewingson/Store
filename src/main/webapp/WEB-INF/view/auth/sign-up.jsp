@@ -9,7 +9,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="div" uri="http://www.springframework.org/tags/form" %>
 
 <!doctype html>
 <html lang="en">

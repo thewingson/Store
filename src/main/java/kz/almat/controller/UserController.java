@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -39,45 +40,35 @@ public class UserController {
 
         User user = userService.getById(id);
 
-        ModelAndView map = new ModelAndView("user/user");
+        ModelAndView map = new ModelAndView("profile");
         map.addObject("user", user);
 
         return map;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/create")
-    public ModelAndView create(){
-        ModelAndView map = new ModelAndView("user/create");
-        return map;
-    }
-
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ModelAndView create(@ModelAttribute("user") User user){
-//        userService.add(user);
-//        return getList();
-//    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id){
+    public RedirectView delete(@PathVariable("id") Long id){
         User user= userService.getById(id);
         userService.delete(user);
-        return getList();
+        return new RedirectView("/admin/users");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/update/{id}")
     public ModelAndView update(@PathVariable("id") Long id){
 
         User user = userService.getById(id);
-        ModelAndView map = new ModelAndView("user/edit");
+        ModelAndView map = new ModelAndView("admin/users/edit");
         map.addObject("user", user);
 
         return map;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/update")
-    public ModelAndView update(@ModelAttribute("user") User user){
+    @RequestMapping(method = RequestMethod.POST, value = "/update/{id}")
+    public RedirectView update(@PathVariable("id") Long id,
+                               @ModelAttribute("user") User user){
+        user.setId(id);
         userService.edit(user);
-        return getList();
+        return new RedirectView("/admin/users");
     }
 
 }
