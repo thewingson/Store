@@ -81,18 +81,11 @@ public class ProductRepoImpl implements ProductRepo {
     public List<Product> getProductInId(Map<Long, Integer> cart) {
         Session session = sessionFactory.getCurrentSession();
 
-//        StringBuilder ids = new StringBuilder();
-//
-//        for(Map.Entry<Long, Integer> c : cart.entrySet()){
-//            ids.append(c.getKey());
-//            ids.append(",");
-//        }
-//        ids.deleteCharAt(ids.length()-1);
-
-        return (List<Product>) session
-//                .createSQLQuery("select * from product where id in ("+ids+")").list();
+        List<Product> products = (List<Product>) session
                 .createQuery(" from Product where id in (:ids)")
                 .setParameterList("ids", cart.keySet())
                 .list();
+
+        return products;
     }
 }

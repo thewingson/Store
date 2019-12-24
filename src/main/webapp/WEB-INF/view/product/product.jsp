@@ -85,8 +85,8 @@
                                 $ ${product.price}</p>
 
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        <a href="#" class="btn btn-primary" href="/products/${product.id}">Read more</a>
-                        <a href="#" class="btn btn-primary" href="/orders/addToCart/${product.id}">Add to
+                        <a href="/products/${product.id}" class="btn btn-primary" >Read more</a>
+                        <a href="/orders/addToCart/${product.id}" class="btn btn-primary" >Add to
                             cart</a>
                     </div>
                 </div>

@@ -39,21 +39,9 @@ public class OrderRepoImpl implements OrderRepo {
         return order;
     }
 
-    public Long add() {
+    public Long add(Order order) {
         Session session = sessionFactory.getCurrentSession();
-
-        Order order = new Order();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(order.getCreatedAt());
-        calendar.add(Calendar.DATE, 7);
-
-        order.setShipDate(new Timestamp(calendar.getTime().getTime()));
-        order.setStatus(OrderStatus.PLACED);
-
-        Long id = (Long) session.save(order);
-
-        return id;
+        return (Long) session.save(order);
     }
 
     public void delete(Order order) {

@@ -2,17 +2,22 @@ package kz.almat.controller;
 
 import kz.almat.model.Order;
 import kz.almat.model.Product;
+import kz.almat.model.User;
 import kz.almat.service.OrderService;
 import kz.almat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.Authenticator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,8 +59,9 @@ public class OrderController {
         return map;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/addToCart/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/addToCart/{id}/{page}")
     public RedirectView addToCart(@PathVariable(value = "id") Long id,
+                          @PathVariable(value = "page") String page,
                                   HttpSession session){
         Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
         Integer cartSize = (Integer)session.getAttribute("cartSize");
@@ -69,24 +75,39 @@ public class OrderController {
         session.setAttribute("cart", cart);
         session.setAttribute("cartSize", cartSize);
 
+        switch (page){
+            case "cart":
+                return new RedirectView("/orders/cart");
+            case "products":
+                return new RedirectView("/products");
+            default:
+                return new RedirectView("/products");
+        }
 
-        return new RedirectView("/products");
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/removeFromCart/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/removeFromCart/{id}/{page}")
     public RedirectView removeFromCart(@PathVariable(value = "id") Long id,
+                                       @PathVariable(value = "page") String page,
                                   HttpSession session){
         Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
         Integer cartSize = (Integer)session.getAttribute("cartSize");
         if(cart.containsKey(id)){
             cart.put(id, cart.get(id) - 1);
+            cartSize--;
         }
-        cartSize--;
 
         session.setAttribute("cart", cart);
         session.setAttribute("cartSize", cartSize);
 
-        return new RedirectView("/cart");
+        switch (page){
+            case "cart":
+                return new RedirectView("/orders/cart");
+            case "products":
+                return new RedirectView("/products");
+            default:
+                return new RedirectView("/products");
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cart")
@@ -103,19 +124,23 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/purchase")
-    public ModelAndView purchase(HttpSession session){
+    public ModelAndView purchase(HttpSession session,
+                                 Authentication authentication){
+
+        User currentUser = (User) authentication.getPrincipal();
 
         Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
-        orderService.add(cart);
+        orderService.add(cart, currentUser);
         session.setAttribute("cart", new HashMap<Long, Integer>());
 
         return getList();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id){
+    public ModelAndView delete(@PathVariable("id") Long id,
+                               BindingResult bindingResult){
         Order order = orderService.getById(id);
-        orderService.delete(order);
+        orderService.delete(order, bindingResult);
         return getList();
     }
 

@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html>
 <head>
@@ -61,7 +64,7 @@
                         <strong class="d-block text-gray-dark">${product.key.name} ${product.key.vendor.name}</strong> ${product.value}
                     </p>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                         <strong class="d-block text-gray-dark"> <a class="btn-danger" href="/orders/addToCart/${product.id}">-</a> ${product.value} <a class="btn-success" href="/orders/addToCart/${product.id}">+</a> </strong>
+                         <strong class="d-block text-gray-dark"> <a class="btn-danger" href="/orders/removeFromCart/${product.key.id}/cart">-</a> ${product.value} <a class="btn-success" href="/orders/addToCart/${product.key.id}/cart">+</a> </strong>
                     </p>
                 </div>
             </c:forEach>

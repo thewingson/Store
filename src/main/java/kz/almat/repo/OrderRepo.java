@@ -9,7 +9,7 @@ public interface OrderRepo {
     List<Order> getAll();
     Order getById(Long id);
     Order getByIdWithProduct(Long id);
-    Long add();
+    Long add(Order order);
     void delete(Order order);
     void edit(Order order);
     void approve(Long id);

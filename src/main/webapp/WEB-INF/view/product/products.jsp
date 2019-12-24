@@ -138,7 +138,7 @@
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cart</button>
+                            <a class="btn btn-outline-info my-2 my-sm-0" type="button" href="/orders/cart">Cart</a>
                         </div>
                     </div>
                 </form>
@@ -159,8 +159,8 @@
                                             ${product.category.name}
                                         $ ${product.price}
                                     </p>
-                                    <a href="#" class="btn btn-primary" href="/products/${product.id}">Read more</a>
-                                    <a href="#" class="btn btn-primary" href="/orders/addToCart/${product.id}">Add to
+                                    <a href="/products/${product.id}" class="btn btn-primary" >Read more</a>
+                                    <a href="/orders/addToCart/${product.id}/products" class="btn btn-primary" >Add to
                                         cart</a>
                                 </div>
                             </div>

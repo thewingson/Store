@@ -53,13 +53,6 @@ public class ProductServiceImpl implements ProductService {
 
         Map<Product, Integer> items = new HashMap<Product, Integer>();
 
-//        Iterator itr = products.iterator();
-//
-//        while(itr.hasNext()){
-//            Product product = (Product) itr.next();
-//            items.put(product, cart.get(product.getId()));
-//        }
-
         for(Product p: products){
             items.put(p, cart.get(p.getId()));
         }
