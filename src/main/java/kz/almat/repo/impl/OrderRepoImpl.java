@@ -1,6 +1,8 @@
 package kz.almat.repo.impl;
 
 import kz.almat.model.Order;
+import kz.almat.model.OrderProduct;
+import kz.almat.model.Product;
 import kz.almat.model.enums.OrderStatus;
 import kz.almat.repo.OrderRepo;
 import org.hibernate.Hibernate;

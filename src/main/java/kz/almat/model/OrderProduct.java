@@ -24,12 +24,12 @@ public class OrderProduct {
     @NotNull
     private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ORDR_ID", foreignKey = @ForeignKey(name = "OP_ORDR_FK"))
     @NotNull
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "OP_PRODUCT_FK"))
     @NotNull
     private Product product;

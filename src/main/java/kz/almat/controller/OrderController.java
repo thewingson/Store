@@ -7,17 +7,14 @@ import kz.almat.service.OrderService;
 import kz.almat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.Authenticator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,10 +134,9 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id,
-                               BindingResult bindingResult){
-        Order order = orderService.getById(id);
-        orderService.delete(order, bindingResult);
+    public ModelAndView delete(@PathVariable("id") Long id){
+        Order order = orderService.getByIdWithProduct(id);
+        orderService.delete(order);
         return getList();
     }
 

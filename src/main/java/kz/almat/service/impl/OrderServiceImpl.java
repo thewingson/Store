@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
@@ -95,14 +94,14 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    public void delete(Order order, BindingResult bindingResult) {
+    public void delete(Order order) {
 
         try {
             if (orderApproved(order)) {
-                throw new OrderDeleteException(bindingResult, ORDER_APPROVED + order.getId());
+                throw new OrderDeleteException(ORDER_APPROVED + order.getId());
             }
             if (orderDelivered(order)) {
-                throw new OrderDeleteException(bindingResult, ORDER_DELIVERED + order.getId());
+                throw new OrderDeleteException(ORDER_DELIVERED + order.getId());
             }
 
             List<OrderProduct> orderProducts = order.getItems();
