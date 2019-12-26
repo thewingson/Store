@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Almat_Rakhmetolla
-  Date: 11/28/2019
-  Time: 2:33 PM
+  Date: 12/26/2019
+  Time: 5:24 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -77,44 +77,41 @@
                 <div class="card mb-3">
                     <div class="card-body">
 
-                        <form>
-                            <fieldset disabled>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="firstName">First name</label>
-                                        <input type="text" class="form-control" id="firstName" value="${user.firstName}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="lastName">Last name</label>
-                                        <input type="text" class="form-control" id="lastName" value="${user.lastName}">
-                                    </div>
+                        <form:form modelAttribute="user" action="/users/edit/${user.id}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="firstName">First name</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName" value="${user.firstName}">
                                 </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" value="${user.username}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" value="${user.email}">
-                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label for="lastName">Last name</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" value="${user.lastName}">
                                 </div>
+                            </div>
 
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" value="${user.password}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="phone">Phone</label>
-                                        <input type="number" class="form-control" id="phone" value="${user.phone}">
-                                    </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" value="${user.username}">
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="${user.email}">
+                                </div>
+                            </div>
 
-                                </fieldset>
-                            <a href="/users/update/${user.id}" class="btn btn-primary">Edit</a>
-                        </form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" value="${user.password}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="phone">Phone</label>
+                                    <input type="number" class="form-control" id="phone" name="phone" value="${user.phone}">
+                                </div>
+                            </div>
+                            <button class="btn btn-success" type="submit">Submit</button>
+                        </form:form>
 
                     </div>
                 </div>

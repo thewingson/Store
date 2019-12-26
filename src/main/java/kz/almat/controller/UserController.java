@@ -3,6 +3,8 @@ package kz.almat.controller;
 import kz.almat.model.User;
 import kz.almat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +48,19 @@ public class UserController {
         return map;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/profile")
+    public ModelAndView getProfile(Authentication authentication){
+
+        User user = (User) authentication.getPrincipal();
+
+//        User user = userService.getById(user);
+
+        ModelAndView map = new ModelAndView("/user/profile");
+        map.addObject("user", user);
+
+        return map;
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
     public RedirectView delete(@PathVariable("id") Long id){
         User user= userService.getById(id);
@@ -57,7 +72,7 @@ public class UserController {
     public ModelAndView update(@PathVariable("id") Long id){
 
         User user = userService.getById(id);
-        ModelAndView map = new ModelAndView("admin/users/edit");
+        ModelAndView map = new ModelAndView("user/edit");
         map.addObject("user", user);
 
         return map;
