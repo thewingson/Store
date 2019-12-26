@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html>
 <head>
@@ -55,6 +58,14 @@
         </c:forEach>
     </c:if>
 </table>
+
+<spring:hasBindErrors name="order">
+    <p>has errors</p>
+    <c:forEach var="error" items="${errors.allErrors}">
+        <b><spring:message message="${error}" /></b>
+        <br />
+    </c:forEach>
+</spring:hasBindErrors>
 
 </body>
 </html>

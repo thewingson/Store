@@ -7,7 +7,10 @@ import kz.almat.service.OrderService;
 import kz.almat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +45,7 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getAll(){
+
         return getList();
     }
 
@@ -121,13 +125,10 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/purchase")
-    public ModelAndView purchase(HttpSession session,
-                                 Authentication authentication){
-
-        User currentUser = (User) authentication.getPrincipal();
+    public ModelAndView purchase(HttpSession session){
 
         Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
-        orderService.add(cart, currentUser);
+        orderService.add(cart);
         session.setAttribute("cart", new HashMap<Long, Integer>());
 
         return getList();
@@ -135,8 +136,15 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id){
+        BindingResult bindingResult = new MapBindingResult(new HashMap<String, Object>(), "order");
+
         Order order = orderService.getByIdWithProduct(id);
-        orderService.delete(order);
+        orderService.delete(order, bindingResult);
+
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+        }
+
         return getList();
     }
 
@@ -162,8 +170,9 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{oid}/items/{iid}/increase")
     public ModelAndView increase(@PathVariable("oid") Long orderId,
-                                   @PathVariable("iid") Long itemId){
-        orderService.increase(itemId);
+                                   @PathVariable("iid") Long itemId,
+                                 Authentication authentication){
+        orderService.increase(orderId, itemId);
 
         return getProducts(orderId);
     }
@@ -171,7 +180,7 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.GET, value = "/{oid}/items/{iid}/decrease")
     public ModelAndView decrease(@PathVariable("oid") Long orderId,
                                    @PathVariable("iid") Long itemId){
-        orderService.decrease(itemId);
+        orderService.decrease(orderId, itemId);
 
         return getProducts(orderId);
     }

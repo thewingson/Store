@@ -6,6 +6,7 @@ import kz.almat.model.OrderProduct;
 import kz.almat.model.Product;
 import kz.almat.model.User;
 import kz.almat.model.enums.OrderStatus;
+import kz.almat.model.enums.Role;
 import kz.almat.repo.OrderProductRepo;
 import kz.almat.repo.OrderRepo;
 import kz.almat.repo.ProductRepo;
@@ -14,7 +15,9 @@ import kz.almat.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
@@ -45,21 +48,41 @@ public class OrderServiceImpl implements OrderService {
     @Value("${error.order.status.delivered}")
     private String ORDER_DELIVERED;
 
+    private final User currentUser = (User) SecurityContextHolder.getContext().getAuthentication();
+
     public List<Order> getAll() {
-        return orderRepo.getAll();
+
+        if(currentUser.getAuthorities().contains(Role.ADMIN)){
+            return orderRepo.getAll();
+        }else {
+            return orderRepo.getByUser(currentUser);
+        }
+
     }
 
     public Order getById(Long id) {
-        return orderRepo.getById(id);
+
+        Order order = orderRepo.getById(id);
+
+        if(currentUser.getAuthorities().contains(Role.ADMIN) || order.getUser().equals(currentUser)){
+            return order;
+        }else {
+            return null;
+        }
     }
 
     public Order getByIdWithProduct(Long id) {
-        return orderRepo.getByIdWithProduct(id);
+        Order order = orderRepo.getByIdWithProduct(id);
+        if(currentUser.getAuthorities().contains(Role.ADMIN) || order.getUser().equals(currentUser)){
+            return order;
+        }else {
+            return null;
+        }
     }
 
-    public void add(Map<Long, Integer> cart, User user) {
+    public void add(Map<Long, Integer> cart) {
 
-        User purchasedUser = userRepo.getByUsername(user.getUsername());
+        User purchasedUser = userRepo.getByUsername(currentUser.getUsername());
 
         //creation of order
         Order order = new Order();
@@ -90,18 +113,14 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    public void addOne(Long productId) {
-
-    }
-
-    public void delete(Order order) {
+    public void delete(Order order, BindingResult bindingResult) {
 
         try {
             if (orderApproved(order)) {
-                throw new OrderDeleteException(ORDER_APPROVED + order.getId());
+                throw new OrderDeleteException(bindingResult, ORDER_APPROVED + order.getId());
             }
             if (orderDelivered(order)) {
-                throw new OrderDeleteException(ORDER_DELIVERED + order.getId());
+                throw new OrderDeleteException(bindingResult, ORDER_DELIVERED + order.getId());
             }
 
             List<OrderProduct> orderProducts = order.getItems();
@@ -122,31 +141,43 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void approve(Long id) {
-        orderRepo.approve(id);
+        if(orderRepo.getById(id).getStatus().equals(OrderStatus.PLACED)){
+            orderRepo.approve(id);
+        }
+
     }
 
     public void delivered(Long id) {
-        orderRepo.delivered(id);
+        if(orderRepo.getById(id).getStatus().equals(OrderStatus.PLACED)){
+            orderRepo.delivered(id);
+        }
     }
 
     public void removeItem(Long orderId, Long itemId) {
-        orderProductRepo.removeItem(orderId, itemId);
+
+        if (orderRepo.getById(orderId).getStatus().equals(OrderStatus.PLACED)) {
+            orderProductRepo.removeItem(orderId, itemId);
+        }
     }
 
-    public void increase(Long itemId) {
-        OrderProduct orderProduct = orderProductRepo.getById(itemId);
-        Product product = productRepo.getById(orderProduct.getProduct().getId());
-        product.setQuantity(product.getQuantity() - 1);
-        productRepo.edit(product);
-        orderProductRepo.increase(itemId);
+    public void increase(Long orderId, Long itemId) {
+        if (orderRepo.getById(orderId).getStatus().equals(OrderStatus.PLACED)) {
+            OrderProduct orderProduct = orderProductRepo.getById(itemId);
+            Product product = productRepo.getById(orderProduct.getProduct().getId());
+            product.setQuantity(product.getQuantity() - 1);
+            productRepo.edit(product);
+            orderProductRepo.increase(itemId);
+        }
     }
 
-    public void decrease(Long itemId) {
-        OrderProduct orderProduct = orderProductRepo.getById(itemId);
-        Product product = productRepo.getById(orderProduct.getProduct().getId());
-        product.setQuantity(product.getQuantity() + 1);
-        productRepo.edit(product);
-        orderProductRepo.decrease(itemId);
+    public void decrease(Long orderId, Long itemId) {
+        if (orderRepo.getById(orderId).getStatus().equals(OrderStatus.PLACED)) {
+            OrderProduct orderProduct = orderProductRepo.getById(itemId);
+            Product product = productRepo.getById(orderProduct.getProduct().getId());
+            product.setQuantity(product.getQuantity() + 1);
+            productRepo.edit(product);
+            orderProductRepo.decrease(itemId);
+        }
     }
 
     private boolean orderApproved(Order order) {
