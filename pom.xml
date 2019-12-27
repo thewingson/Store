@@ -99,46 +99,7 @@
             <version>1.2</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.4.Final</version>
-        </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>5.2.1.RELEASE</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>5.2.1.RELEASE</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>5.2.1.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-dbcp</artifactId>
-            <version>9.0.10</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc8 -->
-        <dependency>
-            <groupId>com.oracle.ojdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>19.3.0.0</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
         <dependency>
@@ -193,7 +154,60 @@
             <version>5.2.1.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
 
+
+
+
+        <!-- DATA -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.4.Final</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>5.2.1.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>5.2.1.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.2.1.RELEASE</version>
+        </dependency>
+        <!-- tomcat dbcp -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>9.0.10</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc8 -->
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>19.3.0.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -201,33 +215,6 @@
             <version>6.1.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.3.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.4.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>
 
     </dependencies>
 

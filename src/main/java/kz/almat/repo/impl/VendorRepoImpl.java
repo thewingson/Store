@@ -10,35 +10,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class VendorRepoImpl implements VendorRepo {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    @SuppressWarnings("unchecked")
-    public List<Vendor> getAll() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery(" from Vendor ").list();
-    }
-
+    @Override
     public Vendor getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Vendor.class, id);
+        return (Vendor) session.createQuery(" select v from Vendor v where v.id=:id ").setParameter("id", id).uniqueResult();
     }
 
-    public void add(Vendor vendor) {
+    @Override
+    public List<Vendor> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(vendor);
+        return session.createQuery(" select v from Vendor v ").list();
     }
 
-    public void delete(Vendor vendor) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(vendor);
-
-    }
-
-    public void edit(Vendor vendor) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(vendor);
-    }
 }

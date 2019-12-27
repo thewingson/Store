@@ -24,15 +24,15 @@ public class VendorServiceImpl implements VendorService {
         return vendorRepo.getById(id);
     }
 
-    public void add(Vendor vendor) {
-        vendorRepo.add(vendor);
-    }
-
-    public void delete(Vendor vendor) {
-        vendorRepo.delete(vendor);
-    }
-
-    public void edit(Vendor vendor) {
-        vendorRepo.edit(vendor);
-    }
+//    public void add(Vendor vendor) {
+//        vendorRepo.save(vendor);
+//    }
+//
+//    public void delete(Vendor vendor) {
+//        vendorRepo.delete(vendor);
+//    }
+//
+//    public void edit(Vendor vendor) {
+//        vendorRepo.save(vendor);
+//    }
 }
