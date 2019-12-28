@@ -8,8 +8,8 @@ public interface VendorService {
 
     List<Vendor> getAll();
     Vendor getById(Long id);
-//    void add(Vendor vendor);
-//    void delete(Vendor vendor);
-//    void edit(Vendor vendor);
+    void add(Vendor vendor);
+    void delete(Long id);
+    void edit(Vendor vendor);
 
 }

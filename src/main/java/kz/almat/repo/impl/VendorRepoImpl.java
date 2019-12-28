@@ -28,4 +28,27 @@ public class VendorRepoImpl implements VendorRepo {
         return session.createQuery(" select v from Vendor v ").list();
     }
 
+    @Override
+    public void save(Vendor vendor) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(vendor);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.createQuery("delete from Vendor v where v.id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    public void update(Vendor vendor) {
+        Session session = sessionFactory.getCurrentSession();
+        session.createNativeQuery("update Vendor set name=:name where id=:id")
+                .setParameter("name", vendor.getName())
+                .setParameter("id", vendor.getId())
+                .executeUpdate();
+    }
+
 }

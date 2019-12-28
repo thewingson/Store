@@ -10,6 +10,10 @@ public interface VendorRepo {
 
     List<Vendor> getAll();
 
+    void save(Vendor vendor);
 
+    void delete(Long id);
+
+    void update(Vendor vendor);
 
 }

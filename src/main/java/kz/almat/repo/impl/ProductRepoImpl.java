@@ -21,25 +21,22 @@ public class ProductRepoImpl implements ProductRepo {
 
     public List<Product> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery(" from Product ").list();
+        return session.createQuery("from Product ").list();
     }
 
     public Product getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Product.class, id);
-//        return (Product) session.createQuery(" from Product where id=:id").setParameter("id", id).list();
     }
 
     public void add(Product product) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(product);
-//        session.close();
     }
 
     public void delete(Product product) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(product);
-
     }
 
     public void edit(Product product) {
