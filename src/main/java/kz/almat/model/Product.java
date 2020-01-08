@@ -39,7 +39,6 @@ public class Product {
 
     @JoinColumn(name = "VENDOR_ID", foreignKey = @ForeignKey(name = "PRODUCT_VENDOR_FK"))
     @ManyToOne(fetch = FetchType.EAGER)
-    @NotNull
     private Vendor vendor;
 }
 

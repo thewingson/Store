@@ -52,18 +52,17 @@ public class VendorController {
         return map;
     }
 
-//    @RequestMapping(method = RequestMethod.POST)
-//    public RedirectView create(@ModelAttribute("vendor") Vendor vendor){
-//        vendorService.add(vendor);
-//        return new RedirectView("/admin/vendors");
-//    }
+    @RequestMapping(method = RequestMethod.POST)
+    public RedirectView create(@ModelAttribute("vendor") Vendor vendor){
+        vendorService.add(vendor);
+        return new RedirectView("/admin/vendors");
+    }
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
-//    public RedirectView delete(@PathVariable("id") Long id){
-//        Vendor vendor= vendorService.getById(id);
-//        vendorService.delete(vendor);
-//        return new RedirectView("/admin/vendors");
-//    }
+    @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
+    public RedirectView delete(@PathVariable("id") Long id){
+        vendorService.delete(id);
+        return new RedirectView("/admin/vendors");
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/update/{id}")
     public ModelAndView update(@PathVariable("id") Long id){
@@ -75,11 +74,11 @@ public class VendorController {
         return map;
     }
 
-//    @RequestMapping(method = RequestMethod.POST, value = "/update/{id}")
-//    public RedirectView update(@PathVariable("id") Long id,
-//                               @ModelAttribute("vendor") Vendor vendor){
-//        vendor.setId(id);
-//        vendorService.edit(vendor);
-//        return new RedirectView("/admin/vendors");
-//    }
+    @RequestMapping(method = RequestMethod.POST, value = "/update/{id}")
+    public RedirectView update(@PathVariable("id") Long id,
+                               @ModelAttribute("vendor") Vendor vendor){
+        vendor.setId(id);
+        vendorService.edit(vendor);
+        return new RedirectView("/admin/vendors");
+    }
 }

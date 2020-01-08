@@ -28,6 +28,7 @@ public class Vendor {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "VENDOR_ID", updatable = false)
+    @NotNull
     private List<Product> products = new ArrayList<Product>();
 
 }

@@ -43,7 +43,7 @@ create table USR_ROLE (
 USR_ID number not null,
 ROLE varchar2(255) not null
 );
-alter table USR_ROLE add constraint USR_ROLE_USR_FK foreign key (USR_ID) references USR(ID);
+alter table USR_ROLE add constraint USR_ROLE_USR_FK foreign key (USR_ID) references USR(ID) on delete cascade;
 
 
 create sequence CATEGORY_SEQ_ID start with 1 increment by  1;
@@ -72,8 +72,8 @@ CATEGORY_ID number not null,
 VENDOR_ID number not null,
 primary key (ID)
 );
-alter table PRODUCT add constraint PRODUCT_CATEGORY_FK foreign key (CATEGORY_ID) references CATEGORY(ID);
-alter table PRODUCT add constraint PRODUCT_VENDOR_FK foreign key (VENDOR_ID) references VENDOR(ID);
+alter table PRODUCT add constraint PRODUCT_CATEGORY_FK foreign key (CATEGORY_ID) references CATEGORY(ID) on delete cascade;
+alter table PRODUCT add constraint PRODUCT_VENDOR_FK foreign key (VENDOR_ID) references VENDOR(ID) on delete cascade;
 
 
 create sequence ORDR_SEQ_ID start with 1 increment by  1;
@@ -86,7 +86,7 @@ STATUS varchar2(255) not null,
 USR_ID number not null,
 primary key (ID)
 );
-alter table ORDR add constraint ORDR_USR_FK foreign key (USR_ID) references USR(ID);
+alter table ORDR add constraint ORDR_USR_FK foreign key (USR_ID) references USR(ID) on delete cascade;
 
 
 create sequence ORDR_PRODUCT_SEQ_ID start with 1 increment by  1;
@@ -97,5 +97,5 @@ ORDR_ID number not null,
 PRODUCT_ID number not null,
 primary key (ID)
 );
-alter table ORDR_PRODUCT add constraint OP_ORDR_FK foreign key (ORDR_ID) references ORDR(ID);
-alter table ORDR_PRODUCT add constraint OP_PRODUCT_FK foreign key (PRODUCT_ID) references PRODUCT(ID);
+alter table ORDR_PRODUCT add constraint OP_ORDR_FK foreign key (ORDR_ID) references ORDR(ID) on delete cascade;
+alter table ORDR_PRODUCT add constraint OP_PRODUCT_FK foreign key (PRODUCT_ID) references PRODUCT(ID) on delete cascade;
