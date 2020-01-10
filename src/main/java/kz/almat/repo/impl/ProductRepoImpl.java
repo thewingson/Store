@@ -21,7 +21,7 @@ public class ProductRepoImpl implements ProductRepo {
 
     public List<Product> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery(" from Product ").list();
+        return session.createQuery("from Product ").list();
     }
 
     public Product getById(Long id) {
@@ -37,7 +37,6 @@ public class ProductRepoImpl implements ProductRepo {
     public void delete(Product product) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(product);
-
     }
 
     public void edit(Product product) {
