@@ -154,22 +154,13 @@
             <version>5.2.1.RELEASE</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.slf4j/slf4j-simple &ndash;&gt;-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.25</version>
             <scope>test</scope>
         </dependency>
-
-
-
 
         <!-- DATA -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
@@ -215,8 +206,6 @@
             <version>6.1.0</version>
         </dependency>
 
-
-
         <!--  TEST -->
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
         <dependency>
@@ -225,7 +214,7 @@
             <version>5.2.2.RELEASE</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api &ndash;&gt;-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

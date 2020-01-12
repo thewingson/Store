@@ -16,6 +16,4 @@ public interface VendorRepo {
 
     void update(Vendor vendor);
 
-
-
 }
