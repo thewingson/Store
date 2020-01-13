@@ -1,10 +1,12 @@
 package kz.almat.config;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -33,18 +35,42 @@ public class HibernateConfig {
         return properties;
     }
 
+//    @Bean
+//    public DataSource dataSource() {
+//        BasicDataSource dataSource = new BasicDataSource();
+//        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+//        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+//        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+//        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+//        return dataSource;
+//    }
+
+//    @Bean
+//    public DataSource dataSource() {
+//        BasicDataSource dataSource = new BasicDataSource();
+//        dataSource.setDriverClassName(environment.getRequiredProperty("spring.datasource.driver-class-name"));
+//        dataSource.setUrl(environment.getRequiredProperty("spring.datasource.url"));
+//        dataSource.setUsername(environment.getRequiredProperty("spring.datasource.username"));
+//        dataSource.setPassword(environment.getRequiredProperty("spring.datasource.password"));
+//        return dataSource;
+//    }
+
     @Bean
     public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-        return dataSource;
+
+        // no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        EmbeddedDatabase db = builder
+                .setType(EmbeddedDatabaseType.HSQL)
+                .setName("shop;Mode=Oracle")
+//                .addScripts("/db/migration/V1__init_db.sql")
+//                .addScripts("/db/migration/V1__init_data.sql")
+                .build();
+        return db;
     }
 
     @Bean
-    @DependsOn("flyway")
+//    @DependsOn("flyway")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());

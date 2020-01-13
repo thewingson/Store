@@ -154,14 +154,6 @@
             <version>5.2.1.RELEASE</version>
         </dependency>
 
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.slf4j/slf4j-simple &ndash;&gt;-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- DATA -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
@@ -205,6 +197,13 @@
             <artifactId>flyway-core</artifactId>
             <version>6.1.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
 
         <!--  TEST -->
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
