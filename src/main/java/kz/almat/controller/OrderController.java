@@ -33,9 +33,9 @@ public class OrderController {
     @Autowired
     private ProductService productService;
 
-    private ModelAndView getList(){
+    private ModelAndView getList(User currentUser){
 
-        List<Order> orders = orderService.getAll();
+        List<Order> orders = orderService.getAll(currentUser);
 
         ModelAndView map = new ModelAndView("order/orders");
         map.addObject("orders", orders);
@@ -44,15 +44,18 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView getAll(){
+    public ModelAndView getAll(Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
 
-        return getList();
+        return getList(currentUser);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public ModelAndView getProducts(@PathVariable("id") Long id){
+    public ModelAndView getProducts(@PathVariable("id") Long id,
+                                    Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
 
-        Order order = orderService.getById(id);
+        Order order = orderService.getById(id, currentUser);
 
         ModelAndView map = new ModelAndView("order/order-products");
         map.addObject("order", order);
@@ -125,64 +128,73 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/purchase")
-    public ModelAndView purchase(HttpSession session){
+    public ModelAndView purchase(HttpSession session,
+                                 Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
 
         Map<Long, Integer> cart = (HashMap<Long, Integer>) session.getAttribute("cart");
-        orderService.add(cart);
+        orderService.add(cart, currentUser);
         session.setAttribute("cart", new HashMap<Long, Integer>());
 
-        return getList();
+        return getList(currentUser);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id){
+    public ModelAndView delete(@PathVariable("id") Long id,
+                               Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
         BindingResult bindingResult = new MapBindingResult(new HashMap<String, Object>(), "order");
 
-        Order order = orderService.getByIdWithProduct(id);
-        orderService.delete(order, bindingResult);
+        Order order = orderService.getByIdWithProduct(id, currentUser);
+        orderService.delete(order, bindingResult, currentUser);
 
-        if(bindingResult.hasErrors()){
-            System.out.println(bindingResult.getAllErrors());
-        }
-
-        return getList();
+        return getList(currentUser);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/approve/{id}")
-    public ModelAndView approve(@PathVariable("id") Long id){
-        orderService.approve(id);
-        return getList();
+    public ModelAndView approve(@PathVariable("id") Long id,
+                                Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
+        orderService.approve(id, currentUser);
+        return getList(currentUser);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delivered/{id}")
-    public ModelAndView delivered(@PathVariable("id") Long id){
-        orderService.delivered(id);
-        return getList();
+    public ModelAndView delivered(@PathVariable("id") Long id,
+                                  Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
+        orderService.delivered(id, currentUser);
+        return getList(currentUser);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{oid}/items/{iid}")
     public ModelAndView removeItem(@PathVariable("oid") Long orderId,
-                                   @PathVariable("iid") Long itemId){
-        orderService.removeItem(orderId, itemId);
+                                   @PathVariable("iid") Long itemId,
+                                   Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
+        orderService.removeItem(orderId, itemId, currentUser);
 
-        return getProducts(orderId);
+        return getProducts(orderId, (Authentication) currentUser);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{oid}/items/{iid}/increase")
     public ModelAndView increase(@PathVariable("oid") Long orderId,
                                    @PathVariable("iid") Long itemId,
                                  Authentication authentication){
-        orderService.increase(orderId, itemId);
+        User currentUser = (User) authentication.getCredentials();
+        orderService.increase(orderId, itemId, currentUser);
 
-        return getProducts(orderId);
+        return getProducts(orderId, (Authentication) currentUser);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{oid}/items/{iid}/decrease")
     public ModelAndView decrease(@PathVariable("oid") Long orderId,
-                                   @PathVariable("iid") Long itemId){
-        orderService.decrease(orderId, itemId);
+                                   @PathVariable("iid") Long itemId,
+                                 Authentication authentication){
+        User currentUser = (User) authentication.getCredentials();
+        orderService.decrease(orderId, itemId, currentUser);
 
-        return getProducts(orderId);
+        return getProducts(orderId, (Authentication) currentUser);
     }
 
 }

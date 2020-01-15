@@ -3,6 +3,7 @@ package kz.almat.controller;
 import kz.almat.model.*;
 import kz.almat.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -74,9 +75,10 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/orders")
-    public ModelAndView getOrders(){
+    public ModelAndView getOrders(Authentication authentication){
+        User user = (User) authentication.getPrincipal();
 
-        List<Order> orders = orderService.getAll();
+        List<Order> orders = orderService.getAll(user);
 
         ModelAndView map = new ModelAndView("admin/orders/orders");
         map.addObject("orders", orders);

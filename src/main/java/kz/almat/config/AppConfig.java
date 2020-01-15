@@ -27,7 +27,6 @@ public class AppConfig implements WebMvcConfigurer {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/WEB-INF/view/**").addResourceLocations("/view/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
 
     @Bean
@@ -41,14 +40,14 @@ public class AppConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-//    @Bean(initMethod = "migrate")
-//    public Flyway flyway() {
-//        Flyway flyway = Flyway.configure().baselineOnMigrate(true).locations("/db/migration").dataSource(
-//                environment.getRequiredProperty("spring.datasource.url"),
-//                environment.getRequiredProperty("spring.datasource.username"),
-//                environment.getRequiredProperty("spring.datasource.password"))
-//                .load();
-//        return flyway;
-//    }
+    @Bean(initMethod = "migrate")
+    public Flyway flyway() {
+        Flyway flyway = Flyway.configure().baselineOnMigrate(true).locations("/db/migration").dataSource(
+                environment.getRequiredProperty("spring.datasource.url"),
+                environment.getRequiredProperty("spring.datasource.username"),
+                environment.getRequiredProperty("spring.datasource.password"))
+                .load();
+        return flyway;
+    }
 
 }

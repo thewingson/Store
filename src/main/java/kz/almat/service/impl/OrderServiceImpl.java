@@ -15,7 +15,6 @@ import kz.almat.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -48,41 +47,39 @@ public class OrderServiceImpl implements OrderService {
     @Value("${error.order.status.delivered}")
     private String ORDER_DELIVERED;
 
-    private final User currentUser = (User) SecurityContextHolder.getContext().getAuthentication();
+    public List<Order> getAll(User user) {
 
-    public List<Order> getAll() {
-
-        if(currentUser.getAuthorities().contains(Role.ADMIN)){
+        if(user.getAuthorities().contains(Role.ADMIN)){
             return orderRepo.getAll();
         }else {
-            return orderRepo.getByUser(currentUser);
+            return orderRepo.getByUser(user);
         }
 
     }
 
-    public Order getById(Long id) {
+    public Order getById(Long id, User user) {
 
         Order order = orderRepo.getById(id);
 
-        if(currentUser.getAuthorities().contains(Role.ADMIN) || order.getUser().equals(currentUser)){
+        if(user.getAuthorities().contains(Role.ADMIN) || order.getUser().equals(user)){
             return order;
         }else {
             return null;
         }
     }
 
-    public Order getByIdWithProduct(Long id) {
+    public Order getByIdWithProduct(Long id, User user) {
         Order order = orderRepo.getByIdWithProduct(id);
-        if(currentUser.getAuthorities().contains(Role.ADMIN) || order.getUser().equals(currentUser)){
+        if(user.getAuthorities().contains(Role.ADMIN) || order.getUser().equals(user)){
             return order;
         }else {
             return null;
         }
     }
 
-    public void add(Map<Long, Integer> cart) {
+    public void add(Map<Long, Integer> cart, User user) {
 
-        User purchasedUser = userRepo.getByUsername(currentUser.getUsername());
+        User purchasedUser = userRepo.getByUsername(user.getUsername());
 
         //creation of order
         Order order = new Order();
@@ -113,7 +110,7 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    public void delete(Order order, BindingResult bindingResult) {
+    public void delete(Order order, BindingResult bindingResult, User user) {
 
         try {
             if (orderApproved(order)) {
@@ -136,31 +133,27 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public void edit(Order order) {
-        orderRepo.edit(order);
-    }
-
-    public void approve(Long id) {
+    public void approve(Long id, User user) {
         if(orderRepo.getById(id).getStatus().equals(OrderStatus.PLACED)){
             orderRepo.approve(id);
         }
 
     }
 
-    public void delivered(Long id) {
+    public void delivered(Long id, User user) {
         if(orderRepo.getById(id).getStatus().equals(OrderStatus.PLACED)){
             orderRepo.delivered(id);
         }
     }
 
-    public void removeItem(Long orderId, Long itemId) {
+    public void removeItem(Long orderId, Long itemId, User user) {
 
         if (orderRepo.getById(orderId).getStatus().equals(OrderStatus.PLACED)) {
             orderProductRepo.removeItem(orderId, itemId);
         }
     }
 
-    public void increase(Long orderId, Long itemId) {
+    public void increase(Long orderId, Long itemId, User user) {
         if (orderRepo.getById(orderId).getStatus().equals(OrderStatus.PLACED)) {
             OrderProduct orderProduct = orderProductRepo.getById(itemId);
             Product product = productRepo.getById(orderProduct.getProduct().getId());
@@ -170,7 +163,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public void decrease(Long orderId, Long itemId) {
+    public void decrease(Long orderId, Long itemId, User user) {
         if (orderRepo.getById(orderId).getStatus().equals(OrderStatus.PLACED)) {
             OrderProduct orderProduct = orderProductRepo.getById(itemId);
             Product product = productRepo.getById(orderProduct.getProduct().getId());

@@ -35,15 +35,15 @@ public class HibernateConfig {
         return properties;
     }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-//        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-//        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-//        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-//        return dataSource;
-//    }
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        return dataSource;
+    }
 
 //    @Bean
 //    public DataSource dataSource() {
@@ -55,22 +55,23 @@ public class HibernateConfig {
 //        return dataSource;
 //    }
 
-    @Bean
-    public DataSource dataSource() {
+//    @Bean
+//    public DataSource dataSource() {
+//
+//        // no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
+//        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+//        EmbeddedDatabase db = builder
+//                .setType(EmbeddedDatabaseType.HSQL)
+////                .setName("shop;Mode=Oracle")
+//                .setName("shop")
+////                .addScripts("/db/migration/V1__init_db.sql")
+////                .addScripts("/db/migration/V1__init_data.sql")
+//                .build();
+//        return db;
+//    }
 
-        // no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase db = builder
-                .setType(EmbeddedDatabaseType.HSQL)
-                .setName("shop;Mode=Oracle")
-//                .addScripts("/db/migration/V1__init_db.sql")
-//                .addScripts("/db/migration/V1__init_data.sql")
-                .build();
-        return db;
-    }
-
     @Bean
-//    @DependsOn("flyway")
+    @DependsOn("flyway")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
