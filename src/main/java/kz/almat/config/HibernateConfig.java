@@ -35,25 +35,25 @@ public class HibernateConfig {
         return properties;
     }
 
-    @Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-        return dataSource;
-    }
-
 //    @Bean
 //    public DataSource dataSource() {
 //        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName(environment.getRequiredProperty("spring.datasource.driver-class-name"));
-//        dataSource.setUrl(environment.getRequiredProperty("spring.datasource.url"));
-//        dataSource.setUsername(environment.getRequiredProperty("spring.datasource.username"));
-//        dataSource.setPassword(environment.getRequiredProperty("spring.datasource.password"));
+//        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+//        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+//        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+//        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
 //        return dataSource;
 //    }
+
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(environment.getRequiredProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(environment.getRequiredProperty("spring.datasource.url"));
+        dataSource.setUsername(environment.getRequiredProperty("spring.datasource.username"));
+        dataSource.setPassword(environment.getRequiredProperty("spring.datasource.password"));
+        return dataSource;
+    }
 
 //    @Bean
 //    public DataSource dataSource() {
@@ -71,7 +71,7 @@ public class HibernateConfig {
 //    }
 
     @Bean
-    @DependsOn("flyway")
+//    @DependsOn("flyway")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
@@ -86,8 +86,5 @@ public class HibernateConfig {
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
-
-
-
 
 }
