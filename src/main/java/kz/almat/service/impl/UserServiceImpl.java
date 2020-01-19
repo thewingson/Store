@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         return userRepo.getById(id);
     }
 
-    public User add(UserDTO userDTO, BindingResult bindingResult) {
+    public User add(UserDTO userDTO, BindingResult bindingResult){
 
         User registered;
 

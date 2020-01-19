@@ -7,7 +7,7 @@ public class EmailExistsException extends RuntimeException{
 
     @SneakyThrows
     public EmailExistsException(BindingResult bindingResult, String msg) {
-        super.printStackTrace();
+        super(msg);
         bindingResult.rejectValue("email", "error.user",  msg);
     }
 }
